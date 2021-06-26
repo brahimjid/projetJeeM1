@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>Articles </title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="./fontawesome-free-5.15.3-web/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="row m-2">
+      <div class="col-sm-12">
+        <h3 class="p-2" id="title">Liste des Articles </h3>
+      </div>
+    </div>
+    <!-- <div class="form-inline">
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="inputPassword2" class="sr-only">Nom</label>
+        <input type="" class="form-control" id="nom" placeholder="Nom" />
+      </div>
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="inputPassword2" class="sr-only">Prenom</label>
+        <input
+          type="text"
+          class="form-control"
+          id="prenom"
+          placeholder="Prenom"
+        />
+      </div>
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="inputPassword2" class="sr-only">Genre</label>
+        <input
+          type="text"
+          class="form-control"
+          id="genre"
+          placeholder="Genre"
+        />
+      </div>
+      <div class="form-group mx-sm-3 mb-2">
+        <label for="inputPassword2" class="sr-only">DateNaissance</label>
+        <input
+          type="text"
+          class="form-control"
+          id="daten"
+          placeholder="DateNaissance"
+        />
+      </div>
+
+      <button class="btn btn-primary mb-2" onclick="addNew()">Ajouter</button>
+    </div> -->
+    <div class="row m-2">
+      <div class="col-sm-12">
+        <table id="tableArticles" class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>#Ref</th>
+              <th>Libelle</th>
+              <th>Date d'expiration</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="tableArticlesBody">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="js/script.js"></script>
+  </body>
+</html>
