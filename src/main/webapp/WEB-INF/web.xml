@@ -17,4 +17,13 @@
         <servlet-name>JAX-RS API</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
+
+<!--    <filter>-->
+<!--        <filter-name>adminFilter</filter-name>-->
+<!--        <filter-class>com.br.gestionStock.CorsFilter</filter-class>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>adminFilter</filter-name>-->
+<!--        <url-pattern>/project/admin/*</url-pattern>-->
+<!--    </filter-mapping>-->
 </web-app>

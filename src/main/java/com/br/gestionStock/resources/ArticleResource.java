@@ -5,6 +5,7 @@ import com.br.gestionStock.models.Article;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -17,6 +18,18 @@ public class ArticleResource {
     ArticleDoa articleDoa = new ArticleDoa();
 
     @GET
+//    public Response index() {
+//        return Response
+//                .status(200)
+//                .header("Access-Control-Allow-Origin", "*")
+//                .header("Access-Control-Allow-Credentials", "true")
+//                .header("Access-Control-Allow-Headers",
+//                        "origin, content-type, accept, authorization")
+//                .header("Access-Control-Allow-Methods",
+//                        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+//                .entity("test")
+//                .build();
+//    }
     public List<Article> getAll() {
         return articleDoa.getAll();
     }
