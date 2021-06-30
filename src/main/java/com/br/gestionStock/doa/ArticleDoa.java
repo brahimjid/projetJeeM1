@@ -42,6 +42,8 @@ public class ArticleDoa {
 
     public Article getById(Long id) {
 
+
+           //return  em.find(Article.class,id);
         String sql = "select a from Article a where a.id =:id ";
 
         TypedQuery<Article> qr = em.createQuery(sql, Article.class);

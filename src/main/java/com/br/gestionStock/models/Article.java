@@ -1,11 +1,10 @@
 package com.br.gestionStock.models;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 
 @Entity
@@ -17,6 +16,9 @@ public class Article {
      private String libelle;
      private double prix;
      private Date date_exp;
+
+    @OneToMany(mappedBy = "article")
+    private List<Operation> operations;
 
     public void setId(Long id) {
         this.id = id;
