@@ -7,15 +7,6 @@ public class Stock {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-
-    public Article getArticle() {
-        return article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
-    }
-
     @OneToOne
     private Article article;
     private int quantite;
@@ -38,6 +29,13 @@ public class Stock {
     }
 
 
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
+    }
 
     public int getQuantite() {
         return quantite;

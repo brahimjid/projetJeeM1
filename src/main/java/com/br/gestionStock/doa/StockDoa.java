@@ -22,15 +22,22 @@ public class StockDoa {
                em.getTransaction().commit();
                em.close();
            }
-
            else {
                em.getTransaction().begin();
                em.persist(stock);
-               System.out.println("no article");
                em.getTransaction().commit();
                em.close();
            }
 
+
+    }
+
+    public void addQuantite(Stock stock,int quantite){
+        Stock updatedStock = em.find(Stock.class,stock.getId());
+        em.getTransaction().begin();
+        updatedStock.setQuantite(updatedStock.getQuantite() + quantite);
+        em.getTransaction().commit();
+        em.close();
 
     }
     public void removeQuantite(Long id,int quantite){
@@ -46,32 +53,11 @@ public class StockDoa {
 
     }
 
-
-
-
     public void update(Stock stock) {
-
         em.getTransaction().begin();
-
-
         em.merge(stock);
 
         em.getTransaction().commit();
-//        em.close();
-
-    }
-
-    public void addEntry(Long id,int quantite) {
-
-           Stock stock = em.find(Stock.class,id);
-           stock.setQuantite(stock.getQuantite()+quantite);
-        em.getTransaction().begin();
-
-        em.persist(stock);
-
-        em.getTransaction().commit();
-
-//        em.close();
 
     }
 
@@ -86,22 +72,7 @@ public class StockDoa {
     }
 
     public Stock getById(Long id) {
-
-        String sql = "select a from Stock a where a.id =:id ";
-
-        TypedQuery<Stock> qr = em.createQuery(sql, Stock.class);
-
-        qr.setParameter("id", id);
-
-        List<Stock> stocks = qr.getResultList();
-
-        Stock stock = null;
-
-        if (stocks.size() > 0) {
-            stock = stocks.get(0);
-        }
-
-        return stock;
+        return em.find(Stock.class,id);
 
     }
 

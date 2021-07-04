@@ -16,10 +16,6 @@ public class Article {
      private String libelle;
      private double prix;
      private Date date_exp;
-
-    @OneToMany(mappedBy = "article")
-    private List<Operation> operations;
-
     public void setId(Long id) {
         this.id = id;
     }

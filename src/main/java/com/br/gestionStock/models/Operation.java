@@ -1,27 +1,32 @@
 package com.br.gestionStock.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
 public class Operation {
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne()
-   // @ManyToOne
-    //@JoinColumn(name = "article_id", referencedColumnName = "id")
-    private Article article;
-    private int quantite;
-     private int type;
+    @OneToMany(cascade = javax.persistence.CascadeType.ALL,mappedBy="operation")
+    @JsonManagedReference
+    private List<OperationItem> operationItems;
+    private double montant;
+    private int type;
+    private Timestamp created_at;
+
 
     public Operation() {
     }
 
-    public Operation(Long id, Article article, int quantite, int type) {
+    public Operation(Long id, List<OperationItem> operationItems, double montant, int type) {
         this.id = id;
-        this.article = article;
-        this.quantite = quantite;
+        this.montant = montant;
         this.type = type;
+        this.operationItems = operationItems;
     }
 
     public Long getId() {
@@ -32,31 +37,27 @@ public class Operation {
         this.id = id;
     }
 
-    public Article getArticle() {
-        return article;
+    public List<OperationItem> getOperationItems() {
+        return operationItems;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setOperationItems(List<OperationItem> operationItems) {
+        this.operationItems = operationItems;
     }
 
-    public int getQuantite() {
-        return quantite;
+    public double getMontant() {
+        return montant;
     }
 
-    public void setQuantite(int quantite) {
-        this.quantite = quantite;
+    public void setMontant(double montant) {
+        this.montant = montant;
     }
 
-    public String getType() {
-        if (type==1)
-        return "Entree";
-        else
-            return "Sortie";
+    public int getType() {
+        return type;
     }
 
     public void setType(int type) {
-
         this.type = type;
     }
 
@@ -64,9 +65,17 @@ public class Operation {
     public String toString() {
         return "Operation{" +
                 "id=" + id +
-                ", article=" + article +
-                ", quantite=" + quantite +
-                ", type='" + type + '\'' +
+                ", operationItems=" + operationItems +
+                ", montant=" + montant +
+                ", type=" + type +
                 '}';
+    }
+
+    public Timestamp getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(Timestamp created_at) {
+        this.created_at = created_at;
     }
 }

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="fontawesome-free-5.15.3-web/css/all.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">-->
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header border-bottom">
+                <h5>Gestion stocks</h5>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#"><i class="fas fa-user"></i>Stocks</a>
+                </li>
+                <li>
+                    <a href="#">Products</a>
+                </li>
+                <li>
+                    <a href="#">Invoices</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-white">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+<!--                    <button  class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"-->
+<!--                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"-->
+<!--                        aria-expanded="false" aria-label="Toggle navigation">-->
+<!--                        <i class="fas fa-align-justify"></i>-->
+<!--                    </button>-->
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Contacts</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="px-5"><div class="ml-2">
+                <table id="tableArticles" class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>#Ref</th>
+                        <th>Libelle</th>
+                        <th>Date d'expiration</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tableArticlesBody">
+
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+<script src="js/script.js"></script>
+</body>
+
+</html>
+
+
+
+<!--<script src="js/bootstrap.min.js"></script>-->
+<script src="js/bootstrap.bundle.min.js"></script>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        let toggleBtn = document.querySelector("#sidebarCollapse"),
+         sidebar = document.querySelector("#sidebar");
+        toggleBtn.addEventListener('click',()=>{
+            sidebar.classList.toggle("active")
+        })
+
+    });
+
+</script>
