@@ -23,6 +23,12 @@ public class StockResource {
         return stockDoa.getAll();
     }
 
+    @Path("/available")
+    @GET
+    public List<Stock> getAvailable() {
+        return stockDoa.getAValable();
+    }
+
 
     @GET
     @Path("/{idStock}")

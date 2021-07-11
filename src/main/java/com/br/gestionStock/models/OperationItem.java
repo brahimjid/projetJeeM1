@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Table(name = "operation_item")
 public class OperationItem
 {
-
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;

@@ -100,4 +100,13 @@ public class StockDoa {
         return qr.getResultList();
 
     }
+    public List<Stock> getAValable() {
+
+        String sql = "select s from Stock s join Article where s.quantite >0";
+
+        TypedQuery<Stock> qr = em.createQuery(sql, Stock.class);
+
+        return qr.getResultList();
+
+    }
 }

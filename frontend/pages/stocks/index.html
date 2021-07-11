@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article</title>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../fontawesome-free-5.15.3-web/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">-->
+</head>
+<body>
+<div class="text-center" id="loadingContent">
+    <div class="spinner-border text-primary" id="loader" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header border-bottom">
+            <h5>Gestion stocks</h5>
+        </div>
+
+        <ul class="list-unstyled components">
+            <li class="active">
+                <a href="index.html"><i class="fas fa-user px-2"></i>Stocks</a>
+            </li>
+            <li>
+                <a href="../articles/index.html"><i class="fas fa-cart-plus px-2"></i>Articles</a>
+            </li>
+            <li>
+                <a href="#"><i class="fas fa-file-invoice-dollar px-2"></i>Operations</a>
+            </li>
+            <li>
+                <a href="#"><i class="fas fa-shopping-cart px-2"></i>Commandes</a>
+            </li>
+            <li>
+                <a href="../users/index.html"><i class="fas fa-users px-2"></i>Users</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content  -->
+    <div class="container-fluid" id="content">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse" class="btn btn-white">
+                    <i class="fas fa-align-left"></i>
+                </button>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contacts</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-7">
+                <div class="card shadow-sm mt-5" style="background: white !important;">
+                    <div class="card-body">
+                        <div id="tb-container">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5 ">
+                <div class="card shadow vh-100 bg-white">
+                    <div class="card-header bg-transparent">
+<!--                        <div class="d-flex justify-content-between py-2">-->
+                            <h5 class="text-center pt-1">Elements( <span>5</span>)</h5>
+<!--                        </div>-->
+
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless text-center">
+                            <thead class="">
+                            <tr>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Hello from now</td>
+                                <td style="width: 30%">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <button class="btn btn-sm">
+                                            <span class="fw-bold ">+</span>
+                                        </button>
+                                        <input type="number" value="0" class="form-control-sm text-center form-control w-50 mx-2">
+                                        <button class="btn btn-sm">
+                                            <span class="fw-bold ">-</span>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>2000</td>
+                                <td>50000</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <p class="fw-bolder">Total</p>
+                            <strong>200$</strong>
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-primary">Enrgister</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="../../js/jquery.js"></script>
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/core.js"></script>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+        let toggleBtn = document.querySelector("#sidebarCollapse"),
+            sidebar = document.querySelector("#sidebar");
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle("active")
+        });
+
+        createTable('tb-container', null, ['Id', 'libelle','prix', 'quantite', 'action'], "articleTable",
+            function (tableBody) {
+                fetchData("stocks/available", function (data) {
+                    data.map(function (item) {
+                        tableBody.append(`
+                       <tr>
+                         <td class="d-none">${item.id}</td>
+                         <td>${item.article.libelle}</td>
+                         <td>${item.article.prix}</td>
+                         <td>${item.quantite}</td>
+                          <td>
+                         <button class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></button>
+                         </td>
+                      </tr>`);
+                    });
+
+                });
+            },true);
+
+    });
+
+</script>
+
+
+<!-- Modal -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Erreur</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <strong class="text-center "> we encountered an error plz try again <i
+                        class="fas text-danger fa-exclamation"></i></strong>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
+
+
+
+

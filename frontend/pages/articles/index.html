@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article</title>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../fontawesome-free-5.15.3-web/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">-->
+</head>
+<body>
+<div class="text-center" id="loadingContent">
+    <div class="spinner-border text-primary" id="loader" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header border-bottom">
+            <h5>Gestion stocks</h5>
+        </div>
+
+        <ul class="list-unstyled components">
+            <li class="">
+                <a href="../stocks/index.html"><i class="fas fa-user px-2"></i>Stocks</a>
+            </li>
+            <li class="active">
+                <a href="index.html"><i class="fas fa-cart-plus px-2"></i>Articles</a>
+            </li>
+            <li>
+                <a href="#"><i class="fas fa-file-invoice-dollar px-2"></i>Operations</a>
+            </li>
+            <li>
+                <a href="#"><i class="fas fa-shopping-cart px-2"></i>Commandes</a>
+            </li>
+            <li>
+                <a href="../users/index.html"><i class="fas fa-users px-2"></i>Users</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content  -->
+    <div class="container" id="content">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse" class="btn btn-white">
+                    <i class="fas fa-align-left"></i>
+                </button>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contacts</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="card shadow-sm">
+
+                <div class="card-header bg-transparent">
+                    <div id="form" class="my-4">
+                        <form method="post"  id="articleForm" action="articles">
+                        <div class="row px-3">
+                            <div class="col-md-3">
+                                <input type="text" name="ref" class="form-control" placeholder="Reference"
+                                       aria-label="Reference">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" required name="libelle" class="form-control"
+                                      r placeholder="libelle" aria-label="libelle">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <input required type="number" name="prix" class="form-control" placeholder="Prix" aria-label="prix">
+                            </div>
+                            <div class="col-md-3">
+                                <input type="date" class="form-control" name="date_exp" placeholder="Date D'expiration" aria-label="Date D'expiration">
+                            </div>
+                            <div class="d-grid col-3 mx-auto">
+                                <button id="addBtn" class="btn btn-primary">
+                                    <span class="spinner-border d-none spinner-border-sm" role="status"
+                                          aria-hidden="true"></span>
+                                    Ajouter
+                                </button>
+
+                            </div>
+                        </div>
+                        </form>
+
+                        <form method="post" class="d-none" id="articleEditForm" action="articles">
+                            <div class="row px-3">
+                                <div class="col-md-3">
+                                    <input type="text" name="ref" class="form-control" placeholder="Reference"
+                                           aria-label="Reference">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" name="libelle" class="form-control"
+                                           placeholder="libelle" aria-label="libelle">
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <input type="number" name="prix" class="form-control" placeholder="Prix" aria-label="prix">
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="date" class="form-control" name="date_exp" placeholder="Date D'expiration" aria-label="Date D'expiration">
+                                </div>
+                                <div class="d-grid col-3 mx-auto">
+                                    <button id="editBtn" class="btn btn-primary">
+                                    <span class="spinner-border d-none spinner-border-sm" role="status"
+                                          aria-hidden="true"></span>
+                                        Modifier
+                                    </button>
+                                   <input type="hidden" name="id">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <div id="tb-container">
+
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+    <script src="../../js/jquery.js"></script>
+    <script src="../../js/moment.js"></script>
+    <script src="../../js/bootstrap.bundle.min.js"></script>
+    <script src="../../js/core.js"></script>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+            let toggleBtn = document.querySelector("#sidebarCollapse"),
+                sidebar = document.querySelector("#sidebar");
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle("active")
+            });
+
+            createTable('tb-container', null, ['Id', '#Ref', 'Libelle', 'prix', "Date d'expiration",'actions'], "articlesTable",
+                function (tableBody) {
+                    fetchData("articles", function (data) {
+                        data.map(function (item,key) {
+                            console.log()
+                            tableBody.append(`<tr>
+                         <td>${item.id}</td>
+                         <td>${item.ref}</td>
+                         <td>${item.libelle}</td>
+                         <td>${item.prix}</td>
+                         <td>${item.date_exp!==null?moment(item.date_exp).format("YYYY-MM-DD"):''}</td>
+                         <td>
+                         <button data-info="${item}" id="editBtn-${item.id}" onclick="EditData(this,'#articleEditForm')" class="btn btn-sm btn-success"> <i class="fa fa-pen"></i></button>
+                         <button id="deleteBtn-${item.id}" onclick="deleteData(${item.id},'articles')" class="btn btn-sm btn-danger"> <i class="fa fa-trash-alt"></i></button>
+
+                        </td>
+                        </tr>`);
+                            $("#editBtn-"+item.id).data('info',item);
+                        });
+
+                    });
+                });
+
+            $("#addBtn").on('click',function (){
+                 addData("#articleForm",onAdd)
+            }) ;
+            $("#editBtn").on('click',function (){
+                submitData('#articleEditForm',onUpdate)
+            })
+            function onAdd(data){
+                console.log("onAdd")
+                $('tbody').append(`
+                      <tr class="new" id="new">
+                         <td>${data.id}</td>
+                         <td>${data.ref}</td>
+                         <td>${data.libelle}</td>
+                         <td>${data.prix}</td>
+                         <td>${dateFormat(data.date_exp)}</td>
+                         <td>
+                         <button data-info="${data}" id="editBtn-${data.id}" onclick="EditData(this,'#articleEditForm')"
+                            class="btn btn-sm btn-success"> <i class="fa fa-pen"></i>
+                            </button>
+                         <button id="delete-Article" onclick="EditData('#articleEditForm')" class="btn btn-sm btn-danger"> <i class="fa fa-trash-alt"></i></button>
+
+                        </td>
+                      </tr>
+                  `);
+            }
+
+               function onUpdate(data){
+                   let tr =$("#editBtn-"+data.id).parent().parent();
+                   showModal("successModal");
+                   tr.replaceWith(`
+                    <tr class="new" id="new">
+                         <td>${data.id}</td>
+                         <td>${data.ref}</td>
+                         <td>${data.libelle}</td>
+                         <td>${data.prix}</td>
+                         <td>${dateFormat(data.date_exp)}</td>
+                         <td>
+                         <button data-info="${data}" id="editBtn-${data.id}" onclick="EditData(this,'#articleEditForm')"
+                            class="btn btn-sm btn-success"> <i class="fa fa-pen"></i>
+                            </button>
+                         <button id="delete-Article" onclick="EditData('#articleEditForm')" class="btn btn-sm btn-danger"> <i class="fa fa-trash-alt"></i></button>
+
+                        </td>
+                        </tr>
+                  `);
+               }
+        });
+
+    </script>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Erreur</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="text-center">
+                        <i class="fas fa-2x  text-danger fw-bold fa-times-circle"></i>
+                        <p class="pt-2">Une erreur est survenue actualiser la page!</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Success</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="text-center ">
+                        <i class="fas fa-2x  text-success fw-bold fa-check-circle"></i>
+                    </div>
+                        <p class="pt-2"> operation applied</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Suppression</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body fw-bold text-center">
+                    Êtes-vous sûr de vouloir supprimer cet élément ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <button id="confirmDelete" type="button" class="btn btn-primary">Confirmer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
+
+
+
+

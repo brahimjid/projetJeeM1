@@ -2,6 +2,8 @@ package com.br.gestionStock.models;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
@@ -13,8 +15,11 @@ public class Article {
       @GeneratedValue(strategy= GenerationType.IDENTITY)
      private Long id;
      private String ref;
+    @NotNull(message = "champ est obligatoire")
      private String libelle;
-     private double prix;
+    @Min(value = 0,message = "champ est obligatoire")
+    private double prix;
+
      private Date date_exp;
     public void setId(Long id) {
         this.id = id;

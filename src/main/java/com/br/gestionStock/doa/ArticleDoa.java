@@ -13,25 +13,28 @@ public class ArticleDoa {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("StockUnit");
     EntityManager em = emf.createEntityManager();
 
-    public void add(Article article) {
+    public Article add(Article article) {
         em.getTransaction().begin();
         em.persist(article);
         em.getTransaction().commit();
 
+        return article;
+
     }
 
-    public void update(Article article) {
+    public Article update(Article article) {
 
         em.getTransaction().begin();
 
         em.merge(article);
 
         em.getTransaction().commit();
-
+  return article;
     }
 
-    public void remove(Article article) {
-
+    public void remove(Long id) {
+      Article article = em.find(Article.class,id);
+        System.out.println(article.toString());
         em.getTransaction().begin();
 
         em.remove(article);

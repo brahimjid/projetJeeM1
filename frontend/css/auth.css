@@ -1,0 +1,30 @@
+.card {
+    width: 400px;
+    padding: 20px;
+    border: none
+}
+
+.account {
+    font-weight: 500;
+    font-size: 17px
+}
+
+.contact {
+    font-size: 13px
+}
+
+.form-control {
+    text-indent: 14px
+}
+
+.inputbox {
+    margin-bottom: 10px;
+    position: relative
+}
+
+.inputbox i {
+    position: absolute;
+    left: 8px;
+    top: 12px;
+    color: #dadada
+}
