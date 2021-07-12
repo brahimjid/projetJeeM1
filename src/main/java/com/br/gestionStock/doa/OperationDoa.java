@@ -13,14 +13,27 @@ import java.util.stream.Collectors;
 public class OperationDoa {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("StockUnit");
     EntityManager em = emf.createEntityManager();
+    StockDoa stockDoa = new StockDoa();
+
      final int TYPE_ENTREE =1;
      final int TYPE_SORTIE =2;
-   StockDoa stockDoa = new StockDoa();
+
+
+    public List<Operation> ArticleOperations(Long id){
+
+
+        String sql = "select op from  Operation op join OperationItem oi on op.id = oi.operation_id and oi.article.id = "+id;
+
+        TypedQuery<Operation> qr = em.createQuery(sql, Operation.class);
+        return qr.getResultList();
+
+    }
      public Operation addOperation(Operation operation){
             em.getTransaction().begin();
             em.persist(operation);
-         em.getTransaction().commit();
-         for (OperationItem item :operation.getOperationItems()){
+            em.getTransaction().commit();
+
+            for (OperationItem item :operation.getOperationItems()){
              OperationItem op =  em.find(OperationItem.class, item.getId());
              op.setOperation_id(operation.getId());
              em.getTransaction().begin();
@@ -41,8 +54,6 @@ public class OperationDoa {
 
 
          }
-
-
 
          return operation;
 
@@ -81,13 +92,15 @@ public class OperationDoa {
 
     }
 
-    public List<Operation> ArticleOperations(Long id){
 
 
-        String sql = "select op from  Operation op join OperationItem oi on op.id = oi.operation_id and oi.article.id = "+id;
+    public void remove(Long id) {
+        Operation operation = em.find(Operation.class,id);
+        em.getTransaction().begin();
 
-        TypedQuery<Operation> qr = em.createQuery(sql, Operation.class);
-        return qr.getResultList();
+        em.remove(operation);
+
+        em.getTransaction().commit();
 
     }
 

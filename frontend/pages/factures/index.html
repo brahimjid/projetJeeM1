@@ -25,13 +25,13 @@
         </div>
 
         <ul class="list-unstyled components">
-            <li class="active">
-                <a href="index.html"><i class="fas fa-user px-2"></i>Stocks</a>
+            <li>
+                <a href="../stocks/index.html"><i class="fas fa-user px-2"></i>Stocks</a>
             </li>
             <li>
                 <a href="../articles/index.html"><i class="fas fa-cart-plus px-2"></i>Articles</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="../factures/index.html"><i class="fas fa-file-invoice-dollar px-2"></i>Factures</a>
             </li>
             <li>
@@ -65,58 +65,66 @@
                             <a class="nav-link" href="index.html">List</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="add.html">Entree</a>
+                            <a class="nav-link" href="entree.html">Entree</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="remove.html">Sortir</a>
+                            <a class="nav-link" href="sortie.html">Sortir</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-                <div class="card shadow-sm mt-2" style="background: white !important;">
-                    <div class="card-header bg-transparent">
-                          <div class="float-end">
-                         <input class="form-control" placeholder="Chercher">
-                          </div>
-                    </div>
-                    <div class="card-body">
-                        <div id="tb-container">
-
-                        </div>
-                    </div>
+        <div class="card shadow-sm mt-2" style="background: white !important;">
+            <div class="card-header bg-transparent">
+                <div class="float-end">
+                    <input class="form-control" placeholder="Chercher">
                 </div>
+            </div>
+            <div class="card-body">
+                <div id="tb-container">
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <script src="../../js/jquery.js"></script>
+<script src="../../js/moment.js"></script>
 <script src="../../js/bootstrap.bundle.min.js"></script>
 <script src="../../js/core.js"></script>
 <script>
 
-    document.addEventListener("DOMContentLoaded", function (event) {
+    document.addEventListener("DOMContentLoaded", function () {
         let toggleBtn = document.querySelector("#sidebarCollapse"),
             sidebar = document.querySelector("#sidebar");
         toggleBtn.addEventListener('click', () => {
             sidebar.classList.toggle("active")
         });
 
-        createTable('tb-container', null, ['Id', 'article','prix', 'quantite'], "articleTable",
+        createTable('tb-container', ['text-center'], ['Id', 'Code','Montant', "Type","Date",'Supprimer'], "facturesTable",
             function (tableBody) {
-                fetchData("stocks/available", function (data) {
+                fetchData("operations", function (data) {
                     data.map(function (item) {
-                        tableBody.append(`
-                       <tr>
-                         <td class="d-none">${item.id}</td>
-                         <td>${item.article.libelle}</td>
-                         <td>${item.article.prix}</td>
-                         <td>${item.quantite}</td>
+                        console.log()
+                        tableBody.append(`<tr>
+                         <td>${item.id}</td>
+                         <td>${item.id}</td>
+                         <td><strong>${item.montant} UM</strong></td>
+                         <td>${item.type===1?"Entree":"Sortie"}</td>
+                         <td>${item.date_exp!==null?moment(item.date).format("YYYY-MM-DD"):''}</td>
+                          <td>
+<!--                         <button data-info="${item}" id="showBtn-${item.id}" onclick="alert(88)" class="btn btn-sm btn-primary"> <i class="fa fa-eye"></i></button>-->
+                         <button id="deleteBtn-${item.id}" onclick="deleteData(${item.id},'operations')" class="btn btn-sm btn-danger"> <i class="fa fa-trash-alt"></i></button>
 
-                      </tr>`);
+                        </td>
+                        </tr>`);
+                        // $("#showBtn-"+item.id).data('info',item);
                     });
 
                 });
-            },true);
+            }
+            );
 
 
 
@@ -138,6 +146,44 @@
                         class="fas text-danger fa-exclamation"></i></strong>
             </div>
 
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="text-center ">
+                    <i class="fas fa-2x  text-success fw-bold fa-check-circle"></i>
+                </div>
+                <p class="pt-2"> operation applied</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Button trigger modal -->
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Suppression</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body fw-bold text-center">
+                Êtes-vous sûr de vouloir supprimer cet élément ?
+            </div>
+            <div class="modal-footer">
+                <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button id="confirmDelete" type="button" class="btn btn-primary">Confirmer</button>
+            </div>
         </div>
     </div>
 </div>

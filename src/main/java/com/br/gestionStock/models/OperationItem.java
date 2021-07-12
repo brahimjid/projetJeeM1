@@ -23,6 +23,8 @@ public class OperationItem
     private int quantite;
 
     private Long operation_id;
+    private double prix_unitaire;
+    private double prix_total;
     public OperationItem() {
     }
     public Long getOperation_id() {
@@ -66,6 +68,22 @@ public class OperationItem
 
     public int getQuantite() {
         return quantite;
+    }
+
+    public double getPrix_unitaire() {
+        return prix_unitaire;
+    }
+
+    public void setPrix_unitaire(double prix_unitaire) {
+        this.prix_unitaire = prix_unitaire;
+    }
+
+    public double getPrix_total() {
+        return prix_total;
+    }
+
+    public void setPrix_total(double prix_total) {
+        this.prix_total = prix_total;
     }
 
     public void setQuantite(int quantite) {

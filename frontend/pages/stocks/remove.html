@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock</title>
+    <title>Sortie</title>
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <link href="../../fontawesome-free-5.15.3-web/css/all.min.css" rel="stylesheet">
     <link href="../../css/style.css" rel="stylesheet">
@@ -61,39 +61,79 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="index.html">List</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="add.html">Entree</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item active">
                             <a class="nav-link" href="remove.html">Sortir</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-                <div class="card shadow-sm mt-2" style="background: white !important;">
-                    <div class="card-header bg-transparent">
-                          <div class="float-end">
-                         <input class="form-control" placeholder="Chercher">
-                          </div>
-                    </div>
+
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-6">
+                <div class="card shadow-sm mt-5" style="background: white !important;">
                     <div class="card-body">
                         <div id="tb-container">
 
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card shadow vh-100 bg-white">
+                    <div class="card-header bg-transparent">
+                        <!--                        <div class="d-flex justify-content-between py-2">-->
+                        <h5 class="text-center pt-1">Elements (<span id="countItem">0</span>)</h5>
+                        <!--                        </div>-->
+
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless text-center" id="stockSortieTable">
+                            <thead class="">
+                            <tr>
+                                <th>Libelle</th>
+                                <th>Quantity</th>
+                                <th>P.U</th>
+                                <th>P.T</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <p class="fw-bolder">Total</p>
+                            <strong id="totalOperation">0 UM</strong>
+                        </div>
+                        <div class="d-grid col-8 mx-auto">
+                            <button onclick="insert()" class="btn btn-primary">Enrgister</button>
+                        </div>
+                        <input type="hidden" id="montant" name="montant">
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
 
 <script src="../../js/jquery.js"></script>
 <script src="../../js/bootstrap.bundle.min.js"></script>
 <script src="../../js/core.js"></script>
-<script>
+<script src="../../js/sortie.js"></script>
+<script src="../../js/st.js"></script>
 
+
+<script>
     document.addEventListener("DOMContentLoaded", function (event) {
         let toggleBtn = document.querySelector("#sidebarCollapse"),
             sidebar = document.querySelector("#sidebar");
@@ -101,17 +141,20 @@
             sidebar.classList.toggle("active")
         });
 
-        createTable('tb-container', null, ['Id', 'article','prix', 'quantite'], "articleTable",
+        createTable('tb-container', null, ['Id', 'libelle','prix','quantite', 'action'], "articleTable",
             function (tableBody) {
                 fetchData("stocks/available", function (data) {
                     data.map(function (item) {
                         tableBody.append(`
                        <tr>
-                         <td class="d-none">${item.id}</td>
+                         <td class="d-none">${item.article.id}</td>
                          <td>${item.article.libelle}</td>
                          <td>${item.article.prix}</td>
                          <td>${item.quantite}</td>
 
+                          <td>
+                         <button data-info="" id="add-bt-${item.id}" onclick='appendOperation(${JSON.stringify(item)})' class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></button>
+                         </td>
                       </tr>`);
                     });
 
@@ -119,13 +162,14 @@
             },true);
 
 
-
     });
 
 </script>
 
 
+
 <!-- Modal -->
+<!-- Modal error -->
 <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -134,13 +178,35 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <strong class="text-center "> we encountered an error plz try again <i
-                        class="fas text-danger fa-exclamation"></i></strong>
+                <div class="text-center">
+                    <i class="fas fa-2x  text-danger fw-bold fa-times-circle"></i>
+                    <p class="pt-2">Une erreur est survenue actualiser la page!</p>
+                </div>
+
             </div>
 
         </div>
     </div>
 </div>
+<!-- Modal success -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="text-center ">
+                    <i class="fas fa-2x  text-success fw-bold fa-check-circle"></i>
+                </div>
+                <p class="pt-2"> operation applied</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 </body>
 
 </html>

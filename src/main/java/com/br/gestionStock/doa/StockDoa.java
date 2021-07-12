@@ -13,33 +13,24 @@ public class StockDoa {
     EntityManager em = emf.createEntityManager();
 
     public void add(Stock stock) {
-
             Stock articleStock = inStock(stock.getArticle().getId());
+
            if (articleStock!=null){
                Stock updatedStock = em.find(Stock.class,articleStock.getId());
                em.getTransaction().begin();
                updatedStock.setQuantite(updatedStock.getQuantite() + stock.getQuantite());
-               em.getTransaction().commit();
-               em.close();
            }
            else {
+
                em.getTransaction().begin();
                em.persist(stock);
-               em.getTransaction().commit();
-               em.close();
            }
-
-
-    }
-
-    public void addQuantite(Stock stock,int quantite){
-        Stock updatedStock = em.find(Stock.class,stock.getId());
-        em.getTransaction().begin();
-        updatedStock.setQuantite(updatedStock.getQuantite() + quantite);
         em.getTransaction().commit();
-        em.close();
+
 
     }
+
+
     public void removeQuantite(Long id,int quantite){
         Stock updatedStock = em.find(Stock.class,id);
         em.getTransaction().begin();
@@ -56,7 +47,6 @@ public class StockDoa {
     public void update(Stock stock) {
         em.getTransaction().begin();
         em.merge(stock);
-
         em.getTransaction().commit();
 
     }

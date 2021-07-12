@@ -13,6 +13,14 @@ public class ArticleDoa {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("StockUnit");
     EntityManager em = emf.createEntityManager();
 
+
+    public List<Article> getAll() {
+        String sql = "select e from Article e ";
+        TypedQuery<Article> qr = em.createQuery(sql, Article.class);
+        return qr.getResultList();
+
+    }
+
     public Article add(Article article) {
         em.getTransaction().begin();
         em.persist(article);
@@ -65,13 +73,5 @@ public class ArticleDoa {
 
     }
 
-    public List<Article> getAll() {
 
-        String sql = "select e from Article e ";
-
-        TypedQuery<Article> qr = em.createQuery(sql, Article.class);
-
-        return qr.getResultList();
-
-    }
 }

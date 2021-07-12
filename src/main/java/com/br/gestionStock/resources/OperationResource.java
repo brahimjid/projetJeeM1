@@ -46,4 +46,12 @@ public class OperationResource {
     public List<Operation> articleOperation(@PathParam("idArticle") Long id){
         return operationDoa.ArticleOperations(id);
     }
+
+    @DELETE
+    @Path("/{idOperation}")
+    public boolean delete (@PathParam("idOperation") Long id){
+        operationDoa.remove(id);
+        return true;
+    }
+
 }

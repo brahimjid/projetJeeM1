@@ -82,7 +82,6 @@ public class ArticleResource {
         @DELETE
         @Path("/{idArticle}")
         public boolean delete (@PathParam("idArticle") Long id){
-            System.out.println("here");
             articleDoa.remove(id);
             return true;
         }
