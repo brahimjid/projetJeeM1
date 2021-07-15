@@ -28,31 +28,8 @@ public class ArticleResource {
         return articleDoa.getAll();
     }
 
-    @GET
-    @Path("h")
-    @Produces(MediaType.TEXT_HTML)
-    public Document fetchAH() {
-        Document htmlFile = null;
-        try {
-
-            System.out.println("Working Directory = " + System.getProperty("user.dir"));
-
-            htmlFile = Jsoup.parse(new File("/t.html"), "ISO-8859-1");
-            Element div = htmlFile.getElementById("errorModal");
-            System.out.println(div);
-
-            return htmlFile;
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-              e.printStackTrace();
 
 
-
-        }
-
-        return htmlFile;
-
-    }
 
     @POST
     @Valid

@@ -26,7 +26,7 @@ public class StockResource {
     @Path("/available")
     @GET
     public List<Stock> getAvailable() {
-        return stockDoa.getAValable();
+        return stockDoa.getAvailable();
     }
 
 

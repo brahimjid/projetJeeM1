@@ -7,6 +7,7 @@ import com.br.gestionStock.models.Stock;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,9 @@ public class OperationDoa {
             em.getTransaction().begin();
             em.persist(operation);
             em.getTransaction().commit();
+
+            operation.setCode("FA-"+ Calendar.getInstance().get(Calendar.YEAR)+"-"+operation.getId());
+
 
             for (OperationItem item :operation.getOperationItems()){
              OperationItem op =  em.find(OperationItem.class, item.getId());

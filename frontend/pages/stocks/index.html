@@ -7,6 +7,7 @@
     <title>Stock</title>
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <link href="../../fontawesome-free-5.15.3-web/css/all.min.css" rel="stylesheet">
+    <link href="../../css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="../../css/style.css" rel="stylesheet">
     <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">-->
 </head>
@@ -75,11 +76,6 @@
             </div>
         </nav>
                 <div class="card shadow-sm mt-2" style="background: white !important;">
-                    <div class="card-header bg-transparent">
-                          <div class="float-end">
-                         <input class="form-control" placeholder="Chercher">
-                          </div>
-                    </div>
                     <div class="card-body">
                         <div id="tb-container">
 
@@ -90,7 +86,10 @@
 </div>
 
 <script src="../../js/jquery.js"></script>
+<script src="../../js/moment.js"></script>
 <script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/jquery.dataTables.min.js"></script>
+<script src="../../js/dataTables.bootstrap5.min.js"></script>
 <script src="../../js/core.js"></script>
 <script>
 
@@ -101,7 +100,9 @@
             sidebar.classList.toggle("active")
         });
 
-        createTable('tb-container', null, ['Id', 'article','prix', 'quantite'], "articleTable",
+
+
+        createTable('tb-container', null, ['Id', 'article','prix', 'quantite',''], "StocksTable",
             function (tableBody) {
                 fetchData("stocks/available", function (data) {
                     data.map(function (item) {
@@ -111,10 +112,13 @@
                          <td>${item.article.libelle}</td>
                          <td>${item.article.prix}</td>
                          <td>${item.quantite}</td>
+                         <td>
+                      <button data-id="${item.article.id}" id="detailsBtn-${item.id}" onclick="details(${item.article.id},'operations')"
+                         class="btn btn-sm btn-success"> <i class="fa fa-eye"></i></button>
+                        </td>
 
                       </tr>`);
                     });
-
                 });
             },true);
 
@@ -122,8 +126,70 @@
 
     });
 
+    function details(id) {
+        let tableDetails =    $("#detailsTable tbody");
+        $("#detailsModal").modal('show');
+
+        fetchData("operations/article/"+id,function (data){
+         console.log(id);
+            let details={'facture':{'type':'','date':''},"items":[]};
+            data.map(ite=>{
+
+                  ite.operationItems.map(item=>{
+                      if (item.article.id===id){
+                           details.items.push(item);
+
+                             details.facture.type = ite.type;
+                             details.facture.date = dateFormat(ite.created_at);
+                      }
+                  })
+              })
+
+
+
+           details.items.map(item=>{
+                tableDetails.prepend(`
+                   <tr>
+                      <td>${details.facture.type===1?"Entree":"Sortie"}</td>
+                      <td>${item.quantite}</td>
+                      <td>${details.facture.date}</td>
+
+                   </tr>
+            `)
+               $("#product").text()
+            })
+
+        })
+    }
+
 </script>
 
+
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Transaction du produit <span id="product"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table id="detailsTable" class="table text-center table-borderless">
+                    <thead class="border-bottom border-primary">
+                    <tr>
+                        <th>Type Operation</th>
+                        <th>Quantite</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
@@ -134,13 +200,36 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <strong class="text-center "> we encountered an error plz try again <i
-                        class="fas text-danger fa-exclamation"></i></strong>
+                <div class="text-center">
+                    <i class="fas fa-2x  text-danger fw-bold fa-times-circle"></i>
+                    <p class="pt-2">Une erreur est survenue actualiser la page!</p>
+                </div>
+
             </div>
 
         </div>
     </div>
 </div>
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="text-center ">
+                    <i class="fas fa-2x  text-success fw-bold fa-check-circle"></i>
+                </div>
+                <p class="pt-2"> operation applied</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+
 </body>
 
 </html>

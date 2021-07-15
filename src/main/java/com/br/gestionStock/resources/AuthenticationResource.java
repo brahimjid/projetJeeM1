@@ -1,6 +1,7 @@
 package com.br.gestionStock.resources;
 
 import com.br.gestionStock.doa.AuthDoa;
+import com.br.gestionStock.models.User;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -10,29 +11,14 @@ import javax.ws.rs.core.Response;
 import java.io.File;
 import java.io.IOException;
 
-@Path("/login")
+@Path("/auth")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 public class AuthenticationResource {
     AuthDoa authDoa = new AuthDoa();
-    @GET
-    public Document login() throws IOException {
-        String path = new File("./frontend/login.html").getCanonicalPath();
-        Document htmlFile = null;
-        try {
 
-            htmlFile = Jsoup.parse(new File(path), "ISO-8859-1");
-            return htmlFile;
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-
-
-        }
-        return htmlFile;
-    }
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("login")
     public Response authenticateUser(@FormParam("login") String login, @FormParam("password") String password) {
 
         try {
@@ -41,15 +27,26 @@ public class AuthenticationResource {
             authDoa.authenticate(login, password);
 
             // Issue a token for the user
-            String token = authDoa.generateToken(login);
+            User userWithToken = authDoa.generateToken(login);
 
             // Return the token on the response
-            return Response.ok(token).build();
+            return Response.status(Response.Status.OK).entity(userWithToken).build();
 
         } catch (Exception e) {
             e.printStackTrace();
             return Response.status(Response.Status.FORBIDDEN).build();
         }
+    }
+    @GET
+      public boolean logout(){
+
+        return true;
+    }
+    @GET
+    @Path("/{token}")
+      public User getT(@PathParam("token") String token){
+
+        return authDoa.userByToken(token);
     }
 
 

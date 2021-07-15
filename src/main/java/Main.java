@@ -18,19 +18,6 @@ public class Main {
     public static void main(String[] args) {
         //URL url = getClass().getResource("/main/webapp/resources/styles/some.css");
 
-        System.out.println();
-        Document htmlFile = null;
-        try {
-
-            String path = new File("./frontend/t.html").getCanonicalPath();
-            htmlFile = Jsoup.parse(new File(path), "ISO-8859-1");
-            System.out.println(htmlFile.getElementById("errorModal"));
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-
-
-        }
+        System.out.println(PasswordHelper.check("hi","$2a$06$/rs4tjFXx7Zqudt3y/9PtOT/FMkLeVlcqO2esg3aDzLXg1LoQfKR2"));
     }
 }

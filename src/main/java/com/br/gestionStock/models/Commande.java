@@ -4,31 +4,29 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.List;
 
 @Entity
-public class Operation {
+public class Commande {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(cascade = javax.persistence.CascadeType.ALL,mappedBy="operation")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy="commande")
     @JsonManagedReference
-    private List<OperationItem> operationItems;
+    private List<CommandeItem> commande;
     private double montant;
     private int type;
-    private String code;
     private Timestamp created_at;
 
 
-    public Operation() {
+    public Commande() {
     }
 
-    public Operation(Long id, List<OperationItem> operationItems, double montant, int type) {
+    public Commande(Long id, List<CommandeItem> commande, double montant, int type) {
         this.id = id;
         this.montant = montant;
         this.type = type;
-        this.operationItems = operationItems;
+        this.commande = commande;
     }
 
     public Long getId() {
@@ -39,12 +37,12 @@ public class Operation {
         this.id = id;
     }
 
-    public List<OperationItem> getOperationItems() {
-        return operationItems;
+    public List<CommandeItem> getCommandeItems() {
+        return commande;
     }
 
-    public void setOperationItems(List<OperationItem> operationItems) {
-        this.operationItems = operationItems;
+    public void setCommandeItems(List<CommandeItem> commande) {
+        this.commande = commande;
     }
 
     public double getMontant() {
@@ -65,21 +63,12 @@ public class Operation {
 
     @Override
     public String toString() {
-        return "Operation{" +
+        return "Commande{" +
                 "id=" + id +
-                ", operationItems=" + operationItems +
+                ", commande=" + commande +
                 ", montant=" + montant +
                 ", type=" + type +
                 '}';
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getCode() {
-
-        return code;
     }
 
     public Timestamp getCreated_at() {

@@ -90,7 +90,7 @@ public class StockDoa {
         return qr.getResultList();
 
     }
-    public List<Stock> getAValable() {
+    public List<Stock> getAvailable() {
 
         String sql = "select s from Stock s join Article where s.quantite >0";
 

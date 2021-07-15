@@ -72,6 +72,9 @@ function  appendOperation(data){
               type:"POST",
               data:JSON.stringify(opData),
               contentType: 'application/json; charset=utf-8',
+              headers: {
+                  "Authorization": "Bearer cabbd464-9640-480f-8f2d-2474d1e523be22"
+              },
               dataType: 'json',
               success:function (data){
                   showModal("successModal");

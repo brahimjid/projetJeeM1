@@ -7,6 +7,7 @@
     <title>Entree</title>
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <link href="../../fontawesome-free-5.15.3-web/css/all.min.css" rel="stylesheet">
+    <link href="../../css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="../../css/style.css" rel="stylesheet">
     <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">-->
 </head>
@@ -128,7 +129,11 @@
 
 <script src="../../js/jquery.js"></script>
 <script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/jquery.dataTables.min.js"></script>
+<script src="../../js/dataTables.bootstrap5.min.js"></script>
 <script src="../../js/core.js"></script>
+<script src="../../js/jspdf.js"></script>
+<script src="../../js/jspdf.plugin.autotable.js"></script>
 <script src="../../js/entree.js"></script>
 <script src="../../js/st.js"></script>
 
@@ -151,7 +156,8 @@
                          <td>${item.prix}</td>
 
                           <td>
-                         <button data-info="" id="add-bt-${item.id}" onclick='appendOperation(${JSON.stringify(item)})' class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></button>
+                         <button data-info="" id="add-bt-${item.id}" onclick='appendOperation(${JSON.stringify(item)})'
+                          class="btn d-print-none btn-primary btn-sm"><i class="fa fa-plus"></i></button>
                          </td>
                       </tr>`);
                        // $("#add-bt-"+item.id).data('info',item);
@@ -159,6 +165,7 @@
 
                 });
             },true);
+
     });
 
 </script>

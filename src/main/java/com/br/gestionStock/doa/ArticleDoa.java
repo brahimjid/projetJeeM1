@@ -19,6 +19,7 @@ public class ArticleDoa {
         TypedQuery<Article> qr = em.createQuery(sql, Article.class);
         return qr.getResultList();
 
+
     }
 
     public Article add(Article article) {
@@ -42,8 +43,7 @@ public class ArticleDoa {
 
     public void remove(Long id) {
       Article article = em.find(Article.class,id);
-        System.out.println(article.toString());
-        em.getTransaction().begin();
+          em.getTransaction().begin();
 
         em.remove(article);
 
@@ -52,25 +52,7 @@ public class ArticleDoa {
     }
 
     public Article getById(Long id) {
-
-
-           //return  em.find(Article.class,id);
-        String sql = "select a from Article a where a.id =:id ";
-
-        TypedQuery<Article> qr = em.createQuery(sql, Article.class);
-
-        qr.setParameter("id", id);
-
-        List<Article> articles = qr.getResultList();
-
-        Article article = null;
-
-        if (articles.size() > 0) {
-            article = articles.get(0);
-        }
-
-        return article;
-
+      return em.find(Article.class,id);
     }
 
 

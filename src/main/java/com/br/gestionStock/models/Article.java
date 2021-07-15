@@ -15,9 +15,7 @@ public class Article {
       @GeneratedValue(strategy= GenerationType.IDENTITY)
      private Long id;
      private String ref;
-    @NotNull(message = "champ est obligatoire")
      private String libelle;
-    @Min(value = 0,message = "champ est obligatoire")
     private double prix;
 
      private Date date_exp;

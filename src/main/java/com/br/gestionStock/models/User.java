@@ -1,6 +1,8 @@
 package com.br.gestionStock.models;
 
 import com.br.gestionStock.PasswordHelper;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +28,7 @@ public class User {
         this.full_name = full_name;
         this.login = login;
         this.email = email;
+
         this.password = password;
         this.token = token;
     }
@@ -61,7 +64,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -76,5 +79,18 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    @Override
+    
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", full_name='" + full_name + '\'' +
+                ", login='" + login + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", token='" + token + '\'' +
+                '}';
     }
 }

@@ -31,10 +31,14 @@ const fetchData =(url,success=null)=>{
       console.log(" fetching ......")
       $.ajax({
            url:API_URL + url,
+          headers: {
+              "Authorization": "Bearer cabbd464-9640-480f-8f2d-2474d1e523be22"
+          },
+
+
           success:function (data){
                if (success)
                success(data);
-
           },
           error:function (err){
               console.log(err);
@@ -78,6 +82,10 @@ const fetchData =(url,success=null)=>{
               data: JSON.stringify(data),
               contentType: 'application/json; charset=utf-8',
               dataType: 'json',
+              beforeSend: function (xhr) {
+
+                  xhr.setRequestHeader ("Authorization", "Bearer "+getUser().token);
+              },
               success: function (data) {
                   console.log("success")
                   showModal("successModal");
@@ -130,6 +138,9 @@ const fetchData =(url,success=null)=>{
           data: JSON.stringify(data),
           contentType: 'application/json; charset=utf-8',
           dataType: 'json',
+          beforeSend: function (xhr) {
+              xhr.setRequestHeader ("Authorization", "Bearer "+getUser().token);
+          },
           success: function (data) {
               setTimeout(function (){
                   $("#new").removeClass('new')
@@ -162,6 +173,9 @@ const fetchData =(url,success=null)=>{
         $.ajax({
             url: API_URL  + url + "/" +id ,
             type:"delete",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", "Bearer "+getUser().token);
+            },
             success:function (){
                 showModal("successModal");
                 $("#deleteBtn-"+id).parent().parent().remove();
@@ -194,4 +208,70 @@ const fetchData =(url,success=null)=>{
              )
          });
        done($("#"+idTable+'-body'));
+      $.extend( true, $.fn.dataTable.defaults, {
+          "autoWidth": false,
+          language: {
+              url: "../../fr.json"
+          },
+          ordering:false,
+          select:false,
+          bInfo:false,
+          bLengthChange:false,
+          "pageLength": 5
+
+      } );
+
+
+      $(document).ready(function() {
+          setTimeout(function (){
+              $('#'+idTable).DataTable();
+          },2000)
+
+      } );
    }
+
+  function printTable(tableId,code_facture=null,date_facture=null){
+      window.jsPDF = window.jspdf.jsPDF;
+      let start =10;
+      let doc = new jsPDF();
+      if (code_facture !==null && date_facture!==null){
+          doc.text('Facture : #'+code_facture, 10, 15);
+          doc.text('Date : '+date_facture, 10, 28);
+          doc.setFontSize(8);
+          start=40
+      }
+
+
+      doc.autoTable({ html: '#'+tableId,showHead: 'firstPage',startY: start,  });
+      doc.autoPrint();
+      doc.output('dataurlnewwindow');
+  }
+
+  function downloadTable(tableId,code_facture=null,date_facture=null){
+
+          window.jsPDF = window.jspdf.jsPDF;
+          let start =10;
+          let doc = new jsPDF();
+          if (code_facture !==null && date_facture!==null){
+              doc.text('Facture : #'+code_facture, 10, 15);
+              doc.text('Date : '+date_facture, 10, 28);
+              doc.setFontSize(8);
+              start=40
+          }
+          doc.autoTable({ html: '#'+tableId,showHead: 'firstPage',startY: start,  });
+           doc.save(`facture_${code_facture}`);
+  }
+
+    function storeUser(user) {
+        localStorage.setItem('user', user);
+    }
+    function getUser() {
+
+        return JSON.parse(localStorage.getItem('user'));
+    }
+
+    function logout() {
+
+      localStorage.removeItem('user');
+    }
+

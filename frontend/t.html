@@ -18,9 +18,19 @@
             <div class="modal-body text-center">
                 <strong class="text-center "> we encountered an error plz try again <i class="fas text-danger fa-exclamation"></i></strong>
             </div>
-
+                <button onclick="ax()">Send</button>
         </div>
     </div>
 </div>
+ <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+      function ax() {
+          axios.get('http://localhost:4563/gestionStock_war_exploded/api/articles', {
+              headers: {
+                  Authorization: 'Bearer cabbd464-9640-480f-8f2d-2474d1e523be22' //the token is a variable which holds the token
+              }
+          })
+      }
+  </script>
 </body>
 </html>
