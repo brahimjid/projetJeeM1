@@ -2,12 +2,22 @@
   const API_URL ="http://localhost:4563/gestionStock_war_exploded/api/";
 
 
-  // $( window ).on('load',function() {
-  //      if (true){
-  //          window.location.href ="../auth/login.html";
-  //      }
-  //
-  // });
+
+
+
+  $( window ).on('load',function() {
+      if ($("#loginForm").length || $("#registerForm").length){
+            console.log("----");
+            return;
+      }
+
+
+       if (getUser()==null){
+           window.location.href ="../auth/login.html";
+           return;
+       }
+
+  });
 
 $(document).on("submit", "form", function(e){
       e.preventDefault();
@@ -32,10 +42,8 @@ const fetchData =(url,success=null)=>{
       $.ajax({
            url:API_URL + url,
           headers: {
-              "Authorization": "Bearer cabbd464-9640-480f-8f2d-2474d1e523be22"
+              "Authorization": "Bearer "+getUser().token
           },
-
-
           success:function (data){
                if (success)
                success(data);
@@ -82,13 +90,13 @@ const fetchData =(url,success=null)=>{
               data: JSON.stringify(data),
               contentType: 'application/json; charset=utf-8',
               dataType: 'json',
-              beforeSend: function (xhr) {
-
-                  xhr.setRequestHeader ("Authorization", "Bearer "+getUser().token);
+              headers: {
+                  "Authorization": "Bearer "+getUser().token
               },
               success: function (data) {
                   console.log("success")
                   showModal("successModal");
+
                   $(formId +" .spinner-border").addClass('d-none');
                   if (done) {
                       done(data);
@@ -138,8 +146,8 @@ const fetchData =(url,success=null)=>{
           data: JSON.stringify(data),
           contentType: 'application/json; charset=utf-8',
           dataType: 'json',
-          beforeSend: function (xhr) {
-              xhr.setRequestHeader ("Authorization", "Bearer "+getUser().token);
+          headers: {
+              "Authorization": "Bearer "+getUser().token
           },
           success: function (data) {
               setTimeout(function (){
@@ -173,8 +181,8 @@ const fetchData =(url,success=null)=>{
         $.ajax({
             url: API_URL  + url + "/" +id ,
             type:"delete",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader ("Authorization", "Bearer "+getUser().token);
+            headers: {
+                "Authorization": "Bearer "+getUser().token
             },
             success:function (){
                 showModal("successModal");
@@ -262,16 +270,34 @@ const fetchData =(url,success=null)=>{
            doc.save(`facture_${code_facture}`);
   }
 
+
     function storeUser(user) {
-        localStorage.setItem('user', user);
+        localStorage.setItem('user', JSON.stringify(user));
     }
     function getUser() {
 
         return JSON.parse(localStorage.getItem('user'));
     }
-
+  $("#logoutBtn").on("click",function (){
+      logout();
+  })
     function logout() {
+       $.ajax({
+           'url':API_URL +'auth/'+"logout/"+getUser().id,
+           'type':"get",
+           headers: {
+               "Authorization": "Bearer "+getUser().token
+           },
+             success:function (){
+                 localStorage.removeItem('user');
+                 window.location.href = "../auth/login.html"
+             },
+           error:function (err){
+               console.log(err);
+               localStorage.removeItem('user');
+               window.location.href = "../auth/login.html"
+           }
+       })
 
-      localStorage.removeItem('user');
     }
 

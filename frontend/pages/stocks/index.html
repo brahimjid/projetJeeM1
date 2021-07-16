@@ -36,9 +36,6 @@
                 <a href="../factures/index.html"><i class="fas fa-file-invoice-dollar px-2"></i>Factures</a>
             </li>
             <li>
-                <a href="#"><i class="fas fa-shopping-cart px-2"></i>Commandes</a>
-            </li>
-            <li>
                 <a href="../users/index.html"><i class="fas fa-users px-2"></i>Users</a>
             </li>
         </ul>
@@ -71,17 +68,23 @@
                         <li class="nav-item">
                             <a class="nav-link" href="remove.html">Sortir</a>
                         </li>
+
+                        <li class="nav-item ">
+                            <a id="logoutBtn" class="nav-link btn" href="#">Déconnexion</a>
+                        </li>
+
                     </ul>
                 </div>
+
             </div>
         </nav>
-                <div class="card shadow-sm mt-2" style="background: white !important;">
-                    <div class="card-body">
-                        <div id="tb-container">
+        <div class="card shadow-sm mt-2" style="background: white !important;">
+            <div class="card-body">
+                <div id="tb-container">
 
-                        </div>
-                    </div>
                 </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -101,8 +104,7 @@
         });
 
 
-
-        createTable('tb-container', null, ['Id', 'article','prix', 'quantite',''], "StocksTable",
+        createTable('tb-container', null, ['Id', 'article', 'prix', 'quantite', ''], "StocksTable",
             function (tableBody) {
                 fetchData("stocks/available", function (data) {
                     data.map(function (item) {
@@ -120,43 +122,41 @@
                       </tr>`);
                     });
                 });
-            },true);
-
+            }, true);
 
 
     });
 
     function details(id) {
-        let tableDetails =    $("#detailsTable tbody");
+        let tableDetails = $("#detailsTable tbody");
         $("#detailsModal").modal('show');
 
-        fetchData("operations/article/"+id,function (data){
-         console.log(id);
-            let details={'facture':{'type':'','date':''},"items":[]};
-            data.map(ite=>{
+        fetchData("operations/article/" + id, function (data) {
+            console.log(id);
+            let details = {'facture': {'type': '', 'date': ''}, "items": []};
+            data.map(ite => {
 
-                  ite.operationItems.map(item=>{
-                      if (item.article.id===id){
-                           details.items.push(item);
+                ite.operationItems.map(item => {
+                    if (item.article.id === id) {
+                        details.items.push(item);
 
-                             details.facture.type = ite.type;
-                             details.facture.date = dateFormat(ite.created_at);
-                      }
-                  })
-              })
+                        details.facture.type = ite.type;
+                        details.facture.date = dateFormat(ite.created_at);
+                    }
+                })
+            })
 
 
-
-           details.items.map(item=>{
+            details.items.map(item => {
                 tableDetails.prepend(`
                    <tr>
-                      <td>${details.facture.type===1?"Entree":"Sortie"}</td>
+                      <td>${details.facture.type === 1 ? "Entree" : "Sortie"}</td>
                       <td>${item.quantite}</td>
                       <td>${details.facture.date}</td>
 
                    </tr>
             `)
-               $("#product").text()
+                $("#product").text()
             })
 
         })

@@ -74,7 +74,7 @@ table.find('td input').each(function (item,key) {
   function insert(){
 
       if ($('#stockEntreeTable >tbody >tr').length===0){
-          alert("plz insert some thing");
+          alert("ajouter des elements svp");
           return;
       }
           $.ajax({
@@ -84,7 +84,7 @@ table.find('td input').each(function (item,key) {
               contentType: 'application/json; charset=utf-8',
               dataType: 'json',
               headers: {
-                  "Authorization": "Bearer cabbd464-9640-480f-8f2d-2474d1e523be22"
+                  "Authorization": "Bearer "+getUser().token
               },
               success:function (data){
                   showModal("successModal");

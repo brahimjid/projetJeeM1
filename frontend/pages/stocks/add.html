@@ -9,7 +9,12 @@
     <link href="../../fontawesome-free-5.15.3-web/css/all.min.css" rel="stylesheet">
     <link href="../../css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="../../css/style.css" rel="stylesheet">
-    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">-->
+
+    <style>
+        .dataTables_filter {
+            text-align: left !important;
+        }
+    </style>
 </head>
 <body>
 <div class="text-center" id="loadingContent">
@@ -35,9 +40,7 @@
             <li>
                 <a href="../factures/index.html"><i class="fas fa-file-invoice-dollar px-2"></i>Factures</a>
             </li>
-            <li>
-                <a href="#"><i class="fas fa-shopping-cart px-2"></i>Commandes</a>
-            </li>
+
             <li>
                 <a href="../users/index.html"><i class="fas fa-users px-2"></i>Users</a>
             </li>
@@ -70,6 +73,9 @@
                         </li>
                         <li class="nav-item ">
                             <a class="nav-link" href="remove.html">Sortir</a>
+                        </li>
+                        <li class="nav-item ">
+                            <a id="logoutBtn" class="nav-link btn" href="#">Déconnexion</a>
                         </li>
                     </ul>
                 </div>
@@ -165,6 +171,13 @@
 
                 });
             },true);
+
+
+        jQuery(document).ready(function($) {
+            $('#articleTable').DataTable({
+                "dom": '<"pull-left"f><"pull-right"l>tip'
+            });
+        });
 
     });
 

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../fontawesome-free-5.15.3-web/css/all.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/auth.css" rel="stylesheet">
+
+</head>
+<body>
+<main class="form-signin mt-5">
+    <form method="post" action="auth/register" class="d-flex justify-content-center" id="registerForm">
+        <div class="card" style="max-width: 800px">
+            <div class="text-center intro">
+                <img src="../../img/login-form.png" width="160">
+            </div>
+
+            <div class="mt-4 text-center">
+                <h4>Register </h4> <span>Créez votre compte</span>
+                <div class="mt-3 inputbox">
+                    <input required type="text" class="form-control" name="full_name" placeholder="Nom">
+                    <i class="fa fa-user"></i>
+                </div>
+                <div class="mt-3 inputbox">
+                    <input required type="text" class="form-control" name="login" placeholder="login">
+                    <i class="fa fa-user"></i>
+                </div>
+                <div class="inputbox">
+                    <input required type="password" id="password" class="form-control" name="password"
+                           placeholder="mot de passe"> <i
+                        class="fa fa-lock"></i></div>
+                <div class="inputbox">
+                <input required type="password" id="confirm_password" class="form-control"
+                       placeholder="confirmer mot de passe"> <i
+                    class="fa fa-lock"></i></div>
+            </div>
+
+            <div class="d-grid mt-2">
+
+                <button id="registerBtn" class="btn mt-2 btn-primary">
+                    <span class="spinner-border d-none spinner-border-sm"></span>
+                    S'inscrire
+                </button>
+                <a class="btn btn-link" href="login.html">Connexion</a>
+
+            </div>
+            </div>
+
+
+    </form>
+</main>
+
+<script src="../../js/jquery.js"></script>
+<script src="../../js/moment.js"></script>
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="../../js/core.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#registerBtn").on('click', function () {
+           $("#registerBtn .spinner-border").removeClass('d-none');
+           $("#registerForm button").attr('disabled', 'disabled');
+               if (validate("#registerForm")>0){
+                   alert()
+                   return;
+               }
+                if ($("#password").val() != $("#confirm_password").val()){
+                      console.log($("#password").val() + " pass2 :" + $("#confirm_password").val)
+                    $("#password").addClass('is-invalid');
+                    $("#password").next('.invalid-feedback').remove();
+                    $("#confirm_password").addClass('is-invalid');
+                    $("#confirm_password").next('.invalid-feedback').remove();
+                    $(`<p class='invalid-feedback'>le deux mot de passe ne correspond pas </p>`).insertAfter($("#password"));
+                    return;
+                }
+                if ($("#password").val().length<4){
+                    $("#password").addClass('is-invalid');
+                    $("#password").next('.invalid-feedback').remove();
+                    $(`<p class='invalid-feedback'> mot de passe doit comporter au moins  4 caractères </p>`).insertAfter($("#password"));
+                    return;
+                }
+                  addData("#registerForm",function (){
+                      window.location.href="login.html";
+                  },false);
+        });
+    })
+
+</script>
+
+
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Erreur</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="text-center">
+                    <i class="fas fa-2x  text-danger fw-bold fa-times-circle"></i>
+                    <p class="pt-2">Une erreur est survenue actualiser la page!</p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">Success</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="text-center ">
+                    <i class="fas fa-2x  text-success fw-bold fa-check-circle"></i>
+                </div>
+                <p class="pt-2"> operation applied</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

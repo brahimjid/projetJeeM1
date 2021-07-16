@@ -16,19 +16,16 @@ public class User {
     private Long id;
     private String full_name;
     private String login;
-    private String email;
     private String password;
     private String token;
 
     public User() {
     }
 
-    public User(Long id, String full_name, String login, String email, String password, String token) {
+    public User(Long id, String full_name, String login, String password, String token) {
         this.id = id;
         this.full_name = full_name;
         this.login = login;
-        this.email = email;
-
         this.password = password;
         this.token = token;
     }
@@ -57,19 +54,13 @@ public class User {
         this.login = login;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    @JsonIgnore
+    //@JsonIgnore
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
+        System.out.println("here");
         this.password = PasswordHelper.encrypt(password);
     }
 
@@ -88,7 +79,6 @@ public class User {
                 "id=" + id +
                 ", full_name='" + full_name + '\'' +
                 ", login='" + login + '\'' +
-                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", token='" + token + '\'' +
                 '}';

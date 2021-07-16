@@ -19,8 +19,9 @@ public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilt
      */
     @Override
     public void filter(ContainerRequestContext request) throws IOException {
-
-        if (request.getUriInfo().getPath().equals("auth/login")){
+   String path = request.getUriInfo().getPath();
+        System.out.println(path);
+        if (path.equals("auth/login") || path.equals("auth/register")){
             return;
         }
 
@@ -28,17 +29,7 @@ public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilt
         String authorizationHeader = request.getHeaderString(HttpHeaders.AUTHORIZATION);
 
         if (!isTokenBasedAuthentication(authorizationHeader) ){
-//            System.out.println("header is null");
-//            request.getHeaders().add(
-//                    "Access-Control-Allow-Origin", "*");
-//            request.getHeaders().add(
-//                    "Access-Control-Allow-Credentials", "true");
-//            request.getHeaders().add(
-//                    "Access-Control-Allow-Headers",
-//                    "origin, content-type, accept, authorization");
-//            request.getHeaders().add(
-//                    "Access-Control-Allow-Methods",
-//                    "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+
             request.abortWith(Response.ok().status(403).build());
         }
         else {
@@ -47,7 +38,6 @@ public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilt
                     .substring(AUTHENTICATION_SCHEME.length()).trim();
             System.out.println("token=====");
             System.out.println(token);
-            System.out.println("end token =====");
             try {
                 // Validate the token
                 validateToken(token);

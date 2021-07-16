@@ -52,4 +52,11 @@ public  class AuthDoa {
         }
         return user;
     }
+     public void removeToken(long id){
+          User user = em.find(User.class,id);
+            em.getTransaction().begin();
+            user.setToken(null);
+            em.getTransaction().commit();
+
+     }
 }
