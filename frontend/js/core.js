@@ -90,8 +90,9 @@ const fetchData =(url,success=null)=>{
               data: JSON.stringify(data),
               contentType: 'application/json; charset=utf-8',
               dataType: 'json',
+
               headers: {
-                  "Authorization": "Bearer "+getUser().token
+                  "Authorization":getUser()!==null? "Bearer "+getUser().token:''
               },
               success: function (data) {
                   console.log("success")

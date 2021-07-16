@@ -19,11 +19,11 @@
     </servlet-mapping>
 
 <!--    <filter>-->
-<!--        <filter-name>adminFilter</filter-name>-->
-<!--        <filter-class>com.br.gestionStock.CorsFilter</filter-class>-->
+<!--        <filter-name>test</filter-name>-->
+<!--        <filter-class>com.br.gestionStock.Filt</filter-class>-->
 <!--    </filter>-->
 <!--    <filter-mapping>-->
-<!--        <filter-name>adminFilter</filter-name>-->
-<!--        <url-pattern>/project/admin/*</url-pattern>-->
+<!--        <filter-name>test</filter-name>-->
+<!--        <url-pattern>/api/articles</url-pattern>-->
 <!--    </filter-mapping>-->
 </web-app>

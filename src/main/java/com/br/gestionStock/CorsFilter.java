@@ -34,17 +34,20 @@ public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilt
         }
         else {
             System.out.println("headers not null");
-            String token = authorizationHeader
-                    .substring(AUTHENTICATION_SCHEME.length()).trim();
-            System.out.println("token=====");
-            System.out.println(token);
-            try {
-                // Validate the token
-                validateToken(token);
-
-            } catch (Exception e) {
-                abortWithUnauthorized(request);
-            }
+            return;
+//            String token = authorizationHeader
+//                    .substring(AUTHENTICATION_SCHEME.length()).trim();
+//            System.out.println("token=====");
+//            System.out.println(token);
+//            try {
+//                // Validate the token
+//                validateToken(token);
+//             //  return;
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                abortWithUnauthorized(request);
+//            }
         }
 
 
@@ -89,22 +92,12 @@ public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilt
     }
 
     private void abortWithUnauthorized(ContainerRequestContext request) {
-//        request.getHeaders().add(
-//                "Access-Control-Allow-Origin", "*");
-//        request.getHeaders().add(
-//                "Access-Control-Allow-Credentials", "true");
-//        request.getHeaders().add(
-//                "Access-Control-Allow-Headers",
-//                "origin, content-type, accept, authorization");
-//        request.getHeaders().add(
-//                "Access-Control-Allow-Methods",
-//                "GET, POST, PUT, DELETE, OPTIONS, HEAD");
         request.abortWith(Response.ok().status(403).build());
     }
 
     private void validateToken(String token) throws Exception {
 
-        if (authDoa.userByToken(token) ==null){
+        if (authDoa.userByToken(token) == null){
             throw new Exception();
         }
     }
