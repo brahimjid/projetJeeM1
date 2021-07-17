@@ -23,6 +23,7 @@ const showModal= (modalId)=> {
       const myModal = new bootstrap.Modal(document.getElementById(modalId));
         myModal.show()
   }
+
   const hideModal= (modalId)=> {
         let instance =document.getElementById(modalId)
       const modal = bootstrap.Modal.getInstance(instance); modal.hide()
@@ -201,7 +202,7 @@ const fetchData =(url,success=null)=>{
 
        let  tableHeader = `${idTable}-header`;
         $(`#${container}`).append(`
-         <table id="${idTable}" class="table table-bordered table-striped ${classes!==null?classes.join(' '):''}">
+         <table id="${idTable}" class="table table-bordered table-hover table-striped ${classes!==null?classes.join(' '):''}">
                     <thead>
                     <tr class="bg-light" id="${tableHeader}"></tr>
                     </thead>
@@ -226,7 +227,7 @@ const fetchData =(url,success=null)=>{
           bLengthChange:false,
           "pageLength": 10
 
-      } );
+      });
 
 
       $(document).ready(function() {
@@ -237,7 +238,7 @@ const fetchData =(url,success=null)=>{
       } );
    }
 
-  function printTable(tableId,code_facture=null,date_facture=null){
+  function printTable(tableId,code_facture=null,date_facture=null,total=null){
       window.jsPDF = window.jspdf.jsPDF;
       let start =10;
       let doc = new jsPDF();
@@ -249,12 +250,21 @@ const fetchData =(url,success=null)=>{
       }
 
 
-      doc.autoTable({ html: '#'+tableId,showHead: 'firstPage',startY: start,  });
+      doc.autoTable({ html: '#'+tableId,showHead: 'firstPage',startY: start,didDrawPage: function (data) {
+                let height = 0;
+              let str = `Total :  ${total} UM`;
+                height+=data.cursor.y;
+              doc.setFontSize(16)
+              if (total!==null){
+                  doc.text(str, data.settings.margin.left+140, height+10)
+              }
+
+          }  });
       doc.autoPrint();
       doc.output('dataurlnewwindow');
   }
 
-  function downloadTable(tableId,code_facture=null,date_facture=null){
+  function downloadTable(tableId,code_facture=null,date_facture=null,total){
 
           window.jsPDF = window.jspdf.jsPDF;
           let start =10;
@@ -265,7 +275,19 @@ const fetchData =(url,success=null)=>{
               doc.setFontSize(8);
               start=40
           }
-          doc.autoTable({ html: '#'+tableId,showHead: 'firstPage',startY: start,  });
+
+          doc.autoTable({ html: '#'+tableId,showHead: 'firstPage',startY: start, didDrawPage: function (data) {
+
+                  // Footer
+                  let height = 0;
+                  let str = `Total :  ${total} UM`;
+                  height+=data.cursor.y;
+                  doc.setFontSize(16)
+                  if (total!==null){
+                      doc.text(str, data.settings.margin.left+130, height+10)
+                  }
+
+              } });
            doc.save(`facture_${code_facture}`);
   }
 
@@ -278,9 +300,11 @@ const fetchData =(url,success=null)=>{
 
         return JSON.parse(localStorage.getItem('user'));
     }
+
   $("#logoutBtn").on("click",function (){
       logout();
   })
+
     function logout() {
        $.ajax({
            'url':API_URL +'auth/'+"logout/"+getUser().id,

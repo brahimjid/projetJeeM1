@@ -60,7 +60,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="nav navbar-nav ml-auto">
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item ">
                             <a id="logoutBtn" class="nav-link btn" href="#">Déconnexion</a>
                         </li>
@@ -191,6 +191,7 @@
                         </td>
                       </tr>
                   `);
+                $("#editBtn-"+data.id).data('info',data);
             }
 
             function onUpdate(data){
@@ -211,6 +212,7 @@
                         </td>
                       </tr>
                   `);
+                $("#editBtn-"+data.id).data('info',data);
             }
 
         });

@@ -82,9 +82,7 @@ function  appendOperation(data){
                      $(this).replaceWith($(this).val());
                   });
                   let date = moment().format("YYYY-MM-DD HH:mm");
-                  console.log(date)
-                  console.log(data)
-                   printTable("stockSortieTable",data.code,date)
+                   printTable("stockSortieTable",data.code,date,data.montant)
                   cleanup();
 
               },

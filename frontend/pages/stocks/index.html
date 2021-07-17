@@ -69,10 +69,13 @@
                             <a class="nav-link" href="remove.html">Sortir</a>
                         </li>
 
+
+
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item ">
                             <a id="logoutBtn" class="nav-link btn" href="#">Déconnexion</a>
                         </li>
-
                     </ul>
                 </div>
 
@@ -96,7 +99,7 @@
 <script src="../../js/core.js"></script>
 <script>
 
-    document.addEventListener("DOMContentLoaded", function (event) {
+    document.addEventListener("DOMContentLoaded", function () {
         let toggleBtn = document.querySelector("#sidebarCollapse"),
             sidebar = document.querySelector("#sidebar");
         toggleBtn.addEventListener('click', () => {
@@ -106,7 +109,7 @@
 
         createTable('tb-container', null, ['Id', 'article', 'prix', 'quantite', ''], "StocksTable",
             function (tableBody) {
-                fetchData("stocks/available", function (data) {
+                fetchData("stocks", function (data) {
                     data.map(function (item) {
                         tableBody.append(`
                        <tr>
@@ -226,7 +229,7 @@
                 <div class="text-center ">
                     <i class="fas fa-2x  text-success fw-bold fa-check-circle"></i>
                 </div>
-                <p class="pt-2"> operation applied</p>
+                <p class="pt-2">  l'opération a été bien effectué  </p>
             </div>
 
         </div>

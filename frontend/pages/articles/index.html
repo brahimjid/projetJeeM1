@@ -85,7 +85,7 @@
                                 <input required type="number" name="prix" class="form-control" placeholder="Prix" aria-label="prix">
                             </div>
                             <div class="col-md-3">
-                                <input type="date" class="form-control" name="date_exp" placeholder="Date D'expiration" aria-label="Date D'expiration">
+                                <input required type="date" class="form-control" name="date_exp" placeholder="Date D'expiration" aria-label="Date D'expiration">
                             </div>
                             <div class="d-grid col-3 mx-auto">
                                 <button id="addBtn" class="btn btn-primary">
@@ -197,6 +197,7 @@
                         </td>
                       </tr>
                   `);
+                  $("#editBtn-"+data.id).data('info',data);
             }
 
                function onUpdate(data){
@@ -243,6 +244,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -254,7 +256,7 @@
                     <div class="text-center ">
                         <i class="fas fa-2x  text-success fw-bold fa-check-circle"></i>
                     </div>
-                        <p class="pt-2"> operation applied</p>
+                        <p class="pt-2"> l'opération a été bien effectué  </p>
                 </div>
 
             </div>

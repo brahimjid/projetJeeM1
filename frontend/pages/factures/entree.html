@@ -69,6 +69,8 @@
                         <li class="nav-item">
                             <a class="nav-link" href="sortie.html">Sortir</a>
                         </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item ">
                             <a id="logoutBtn" class="nav-link btn" href="#">Déconnexion</a>
                         </li>
@@ -114,7 +116,7 @@
                          <td>${item.code}</td>
                          <td><strong>${item.montant} UM</strong></td>
                          <td>${item.type === 1 ? "Entree" : "Sortie"}</td>
-                         <td>${item.date_exp !== null ? moment(item.date).format("YYYY-MM-DD") : ''}</td>
+                         <td>${dateFormat(item.created_at,true)}</td>
                           <td>
                          <button id="deleteBtn-${item.id}" onclick="deleteData(${item.id},'operations')" class="btn btn-sm btn-danger"> <i class="fa fa-trash-alt"></i></button>
                          <button data-id="${item.id}" id="detailsBtn-${item.id}" onclick="details(${item.id},'operations')"
@@ -148,8 +150,8 @@
                    </tr>
             `)
                 $("#totalFacture").text(`${data.montant} UM`);
-                $("#printBtn").attr('onclick', `printTable('detailsTable','${data.code}','${dateFormat(data.created_at)}')`)
-                $("#downloadBtn").attr('onclick', `downloadTable('detailsTable','${data.code}','${dateFormat(data.created_at)}')`)
+                $("#printBtn").attr('onclick', `printTable('detailsTable','${data.code}','${dateFormat(data.created_at)}','${data.montant}')`)
+                $("#downloadBtn").attr('onclick', `downloadTable('detailsTable','${data.code}','${dateFormat(data.created_at)}','${data.montant}')`)
 
             })
 
@@ -186,7 +188,7 @@
                 <div class="text-center ">
                     <i class="fas fa-2x  text-success fw-bold fa-check-circle"></i>
                 </div>
-                <p class="pt-2"> operation applied</p>
+                <p class="pt-2"> l'opération a été bien effectué  </p>
             </div>
 
         </div>

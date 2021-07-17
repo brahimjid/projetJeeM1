@@ -74,6 +74,9 @@
                         <li class="nav-item ">
                             <a class="nav-link" href="remove.html">Sortir</a>
                         </li>
+
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item ">
                             <a id="logoutBtn" class="nav-link btn" href="#">Déconnexion</a>
                         </li>
@@ -94,12 +97,14 @@
                                 <tr class="">
                                     <th class="d-none ">Id</th>
                                     <th>libelle</th>
-                                    <th>prix</th><th>
-                                    action</th>
+                                    <th>prix</th>
+                                    <th>
+                                        action
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody id="articleTable-body">
-                              
+
                                 </tbody>
                             </table>
                         </div>
@@ -163,9 +168,9 @@
             sidebar.classList.toggle("active")
         });
 
-                fetchData("articles", function (data) {
-                    data.map(function (item) {
-                        $("#articleTable-body").append(`
+        fetchData("articles", function (data) {
+            data.map(function (item) {
+                $("#articleTable-body").append(`
                        <tr>
                          <td class="d-none">${item.id}</td>
                          <td>${item.libelle}</td>
@@ -176,23 +181,22 @@
                           class="btn d-print-none btn-primary btn-sm"><i class="fa fa-plus"></i></button>
                          </td>
                       </tr>`);
-                    });
+            });
 
-                   $("#articleTable").dataTable({
-                       "autoWidth": false,
-                       language: {
-                           url: "../../fr.json"
-                       },
-                       ordering:false,
-                       select:false,
-                       bInfo:false,
-                       bLengthChange:false,
-                       "pageLength": 5,
-                       "dom": '<"pull-left"f><"pull-right"l>tip'
-                   });
+            $("#articleTable").dataTable({
+                "autoWidth": false,
+                language: {
+                    url: "../../fr.json"
+                },
+                ordering: false,
+                select: false,
+                bInfo: false,
+                bLengthChange: false,
+                "pageLength": 5,
+                "dom": '<"pull-left"f><"pull-right"l>tip'
+            });
 
-                });
-
+        });
 
 
         // jQuery(document).ready(function($) {
@@ -204,7 +208,6 @@
     });
 
 </script>
-
 
 
 <!-- Modal -->
@@ -239,7 +242,7 @@
                 <div class="text-center ">
                     <i class="fas fa-2x  text-success fw-bold fa-check-circle"></i>
                 </div>
-                <p class="pt-2"> operation applied</p>
+                <p class="pt-2">  l'opération a été bien effectué  </p>
             </div>
 
         </div>
