@@ -83,9 +83,6 @@
                                 <input type="text" required name="login" class="form-control"
                                        placeholder="login" aria-label="login">
                             </div>
-                            <div class="col-md-3 mb-3">
-                                <input type="email" name="email" class="form-control" placeholder="Email" aria-label="prix">
-                            </div>
                             <div class="col-md-3">
                                 <input type="password" class="form-control" name="password" placeholder="Mot de passe" aria-label="mot de passe">
                             </div>
@@ -109,9 +106,6 @@
                                 <div class="col-md-3">
                                     <input type="text" required name="login" class="form-control"
                                            placeholder="login" aria-label="login">
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <input type="email" name="email" class="form-control" placeholder="Email" aria-label="prix">
                                 </div>
                                 <div class="col-md-3">
                                     <input type="password" class="form-control" name="password" placeholder="Mot de passe" aria-label="mot de passe">
@@ -151,7 +145,7 @@
                 sidebar.classList.toggle("active")
             });
 
-            createTable('tb-container', null, ['Id', 'Full_name', 'login', 'email','actions'], "usersTable",
+            createTable('tb-container', null, ['Id', 'Full_name', 'login','actions'], "usersTable",
                 function (tableBody) {
                     fetchData("users", function (data) {
                         data.map(function (item,key) {
@@ -160,8 +154,7 @@
                          <td>${item.id}</td>
                          <td>${item.full_name}</td>
                          <td>${item.login}</td>
-                         <td>${item.email}</td>
-                         <td>
+                          <td>
                          <button data-info="${item}" id="editBtn-${item.id}" onclick="EditData(this,'#userEditForm')" class="btn btn-sm btn-success"> <i class="fa fa-pen"></i></button>
                          <button id="deleteBtn-${item.id}" onclick="deleteData(${item.id},'users')" class="btn btn-sm btn-danger"> <i class="fa fa-trash-alt"></i></button>
                         </td>
@@ -185,7 +178,6 @@
                          <td>${data.id}</td>
                          <td>${data.full_name}</td>
                          <td>${data.login}</td>
-                         <td>${data.email}</td>
                          <td>
                          <button data-info="${data}" id="editBtn-${data.id}" onclick="EditData(this,'#userEditForm')"
                             class="btn btn-sm btn-success"> <i class="fa fa-pen"></i>
@@ -205,7 +197,7 @@
                          <td>${data.id}</td>
                          <td>${data.full_name}</td>
                          <td>${data.login}</td>
-                         <td>${data.email}</td>
+
                          <td>
                          <button data-info="${data}" id="editBtn-${data.id}" onclick="EditData(this,'#userEditForm')"
                             class="btn btn-sm btn-success"> <i class="fa fa-pen"></i>
@@ -253,7 +245,7 @@
                     <div class="text-center ">
                         <i class="fas fa-2x  text-success fw-bold fa-check-circle"></i>
                     </div>
-                        <p class="pt-2"> operation applied</p>
+                        <p class="pt-2"> l'opération a été bien effectué  </p>
                 </div>
 
             </div>

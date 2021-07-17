@@ -68,7 +68,7 @@ public class OperationDoa {
      }
     public List<Operation> getAll(){
 
-        String sql = "select o from Operation o ";
+        String sql = "select o from Operation o order by o.id desc ";
 
         TypedQuery<Operation> qr = em.createQuery(sql, Operation.class);
 
@@ -78,7 +78,7 @@ public class OperationDoa {
 
     public List<Operation> getAllEntree(){
 
-        String sql = "select o from Operation o where o.type="+TYPE_ENTREE;
+        String sql = "select o from Operation o where o.type="+TYPE_ENTREE +" order by o.id desc";
 
         TypedQuery<Operation> qr = em.createQuery(sql, Operation.class);
 
@@ -88,7 +88,7 @@ public class OperationDoa {
 
     public List<Operation> getAllSortie(){
 
-        String sql = "select o from Operation o  where o.type="+TYPE_SORTIE;
+        String sql = "select o from Operation o  where o.type="+TYPE_SORTIE +" order by o.id desc";
 
         TypedQuery<Operation> qr = em.createQuery(sql, Operation.class);
 

@@ -89,7 +89,19 @@
                 <div class="card shadow-sm mt-5" style="background: white !important;">
                     <div class="card-body">
                         <div id="tb-container">
-
+                            <table id="articleTable" class="table table-bordered table-striped " role="grid">
+                                <thead>
+                                <tr class="">
+                                    <th class="d-none ">Id</th>
+                                    <th>libelle</th>
+                                    <th>prix</th><th>
+                                    action</th>
+                                </tr>
+                                </thead>
+                                <tbody id="articleTable-body">
+                              
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -151,11 +163,9 @@
             sidebar.classList.toggle("active")
         });
 
-        createTable('tb-container', null, ['Id', 'libelle','prix', 'action'], "articleTable",
-            function (tableBody) {
                 fetchData("articles", function (data) {
                     data.map(function (item) {
-                        tableBody.append(`
+                        $("#articleTable-body").append(`
                        <tr>
                          <td class="d-none">${item.id}</td>
                          <td>${item.libelle}</td>
@@ -166,18 +176,30 @@
                           class="btn d-print-none btn-primary btn-sm"><i class="fa fa-plus"></i></button>
                          </td>
                       </tr>`);
-                       // $("#add-bt-"+item.id).data('info',item);
                     });
 
+                   $("#articleTable").dataTable({
+                       "autoWidth": false,
+                       language: {
+                           url: "../../fr.json"
+                       },
+                       ordering:false,
+                       select:false,
+                       bInfo:false,
+                       bLengthChange:false,
+                       "pageLength": 5,
+                       "dom": '<"pull-left"f><"pull-right"l>tip'
+                   });
+
                 });
-            },true);
 
 
-        jQuery(document).ready(function($) {
-            $('#articleTable').DataTable({
-                "dom": '<"pull-left"f><"pull-right"l>tip'
-            });
-        });
+
+        // jQuery(document).ready(function($) {
+        //     $('#articleTable').DataTable({
+        //         "dom": '<"pull-left"f><"pull-right"l>tip'
+        //     });
+        // });
 
     });
 

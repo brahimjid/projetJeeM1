@@ -104,7 +104,7 @@
             sidebar.classList.toggle("active")
         });
 
-        createTable('tb-container', ['text-center'], ['Code','Montant', "Type","Date",'Supprimer'], "facturesTable",
+        createTable('tb-container', ['text-center'], ['Code', 'Montant', "Type", "Date", 'Supprimer'], "facturesTable",
             function (tableBody) {
                 fetchData("operations", function (data) {
                     data.map(function (item) {
@@ -113,43 +113,45 @@
 
                          <td>${item.code}</td>
                          <td><strong>${item.montant} UM</strong></td>
-                         <td>${item.type===1?"Entree":"Sortie"}</td>
-                         <td>${item.date_exp!==null?moment(item.date).format("YYYY-MM-DD"):''}</td>
+                         <td>${item.type === 1 ? "Entree" : "Sortie"}</td>
+                         <td>${item.date_exp !== null ? dateFormat(item.date, true) : ''}</td>
                           <td>
                          <button id="deleteBtn-${item.id}" onclick="deleteData(${item.id},'operations')" class="btn btn-sm btn-danger"> <i class="fa fa-trash-alt"></i></button>
 
                          <button data-id="${item.id}" id="detailsBtn-${item.id}" onclick="details(${item.id},'operations')"
-                         class="btn btn-sm btn-success"> <i class="fa fa-eye"></i></button>
+                         class="btn btn-sm btn-success"> <i class="fa fa-eye"></i>
+                         </button>
                         </td>
                         </tr>`);
                     });
 
                 });
             }
-            );
+        );
 
 
     });
+
     function details(id) {
 
-        let tableDetails =    $("#detailsTable tbody");
+        let tableDetails = $("#detailsTable tbody");
+        tableDetails.html('');
         $("#detailsModal").modal('show');
 
-        fetchData("operations/"+id,function (data){
+        fetchData("operations/" + id, function (data) {
             $("#code").text(data.code)
-            data.operationItems.map(item=>{
-             tableDetails.html(`
+            data.operationItems.map(item => {
+                tableDetails.append(`
                    <tr>
-                      <td>${item.article.libelle}</td>
                       <td>${item.article.libelle}</td>
                       <td>${item.quantite}</td>
                       <td>${item.prix_unitaire}</td>
                       <td>${item.prix_total}</td>
                    </tr>
             `)
-                $("#totalFacture").text(`${data.montant} UM` );
-             $("#printBtn").attr('onclick',`printTable('detailsTable','${data.code}','${dateFormat(data.created_at)}')`)
-             $("#downloadBtn").attr('onclick',`downloadTable('detailsTable','${data.code}','${dateFormat(data.created_at)}')`)
+                $("#totalFacture").text(`${data.montant} UM`);
+                $("#printBtn").attr('onclick', `printTable('detailsTable','${data.code}','${dateFormat(data.created_at)}')`)
+                $("#downloadBtn").attr('onclick', `downloadTable('detailsTable','${data.code}','${dateFormat(data.created_at)}')`)
 
             })
 
@@ -209,7 +211,7 @@
                 Êtes-vous sûr de vouloir supprimer cet élément ?
             </div>
             <div class="modal-footer">
-                <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                 <button id="confirmDelete" type="button" class="btn btn-primary">Confirmer</button>
             </div>
         </div>
@@ -218,8 +220,8 @@
 </body>
 
 
-
-<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="exampleModalLgLabel" aria-modal="true" role="dialog" >
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="exampleModalLgLabel" aria-modal="true"
+     role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -237,20 +239,18 @@
                     </tr>
                     </thead>
                     <tbody>
-
-                    <tr class="border-dark border-top">
-                        <td colspan="3" class="">
-                            <span class="font-weight-bold h5">Total : </span>
-                        </td>
-                        <td>
-                            <span class="font-weight-bold h4" id="totalFacture"> 0 UM</span>
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
+                <div>
+                    <span class="font-weight-bold h5 ">Total : </span>
+                    <span class="font-weight-bold h4 text-end" id="totalFacture"> 0 UM</span>
+                </div>
+                <br>
+
                 <div class="d-flex justify-content-center">
-                    <button id="printBtn" class="btn btn-primary"> <i class="fa fa-file-pdf"></i> Imprimer</button>
-                    <button id="downloadBtn" class="btn btn-success mx-2"> <i class="fa fa-download"></i> Télécharger</button>
+                    <button id="printBtn" class="btn btn-primary"><i class="fa fa-file-pdf"></i> Imprimer</button>
+                    <button id="downloadBtn" class="btn btn-success mx-2"><i class="fa fa-download"></i> Télécharger
+                    </button>
                 </div>
 
 

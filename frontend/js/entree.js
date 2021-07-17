@@ -88,14 +88,14 @@ table.find('td input').each(function (item,key) {
               },
               success:function (data){
                   showModal("successModal");
-                  table.find('td input').each(function (item,key) {
-                     $(this).replaceWith($(this).val());
-                  });
-                  window.jsPDF = window.jspdf.jsPDF
-                  let doc = new jsPDF();
-                  doc.autoTable({html:"#stockEntreeTable"});
-                  doc.autoPrint();
-                  doc.output('dataurlnewwindow');
+                  // table.find('td input').each(function (item,key) {
+                  //    $(this).replaceWith($(this).val());
+                  // });
+                  // window.jsPDF = window.jspdf.jsPDF
+                  // let doc = new jsPDF();
+                  // doc.autoTable({html:"#stockEntreeTable"});
+                  // doc.autoPrint();
+                  // doc.output('dataurlnewwindow');
 
                  cleanup();
 

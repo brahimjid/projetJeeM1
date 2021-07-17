@@ -1,16 +1,11 @@
 
   const API_URL ="http://localhost:4563/gestionStock_war_exploded/api/";
 
-
-
-
-
   $( window ).on('load',function() {
       if ($("#loginForm").length || $("#registerForm").length){
             console.log("----");
             return;
       }
-
 
        if (getUser()==null){
            window.location.href ="../auth/login.html";
@@ -23,6 +18,7 @@ $(document).on("submit", "form", function(e){
       e.preventDefault();
       return  false;
   });
+
 const showModal= (modalId)=> {
       const myModal = new bootstrap.Modal(document.getElementById(modalId));
         myModal.show()
@@ -32,8 +28,9 @@ const showModal= (modalId)=> {
       const modal = bootstrap.Modal.getInstance(instance); modal.hide()
   }
 
-  function dateFormat(date){
-    return moment(date).format('YYYY-MM-DD')
+  function dateFormat(date,time=false){
+
+    return time?moment().format('YYYY-MM-DD HH:mm'):moment(date).format('YYYY-MM-DD')
   }
 
 const fetchData =(url,success=null)=>{
@@ -45,6 +42,7 @@ const fetchData =(url,success=null)=>{
               "Authorization": "Bearer "+getUser().token
           },
           success:function (data){
+
                if (success)
                success(data);
           },
@@ -226,7 +224,7 @@ const fetchData =(url,success=null)=>{
           select:false,
           bInfo:false,
           bLengthChange:false,
-          "pageLength": 5
+          "pageLength": 10
 
       } );
 
@@ -234,7 +232,7 @@ const fetchData =(url,success=null)=>{
       $(document).ready(function() {
           setTimeout(function (){
               $('#'+idTable).DataTable();
-          },2000)
+          },1500)
 
       } );
    }

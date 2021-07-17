@@ -129,30 +129,34 @@
 
     function details(id) {
         let tableDetails = $("#detailsTable tbody");
+        tableDetails.html('');
         $("#detailsModal").modal('show');
-
         fetchData("operations/article/" + id, function (data) {
-            console.log(id);
-            let details = {'facture': {'type': '', 'date': ''}, "items": []};
+               //   console.log(data)
+            let details = {'facture': {'type': [], 'date': []}, "items": []};
             data.map(ite => {
-
+                     details.facture.type.push(ite.type);
+                     details.facture.date.push(dateFormat(ite.created_at,true));
+                    //details.facture.date = dateFormat(ite.created_at,true);
                 ite.operationItems.map(item => {
                     if (item.article.id === id) {
                         details.items.push(item);
-
-                        details.facture.type = ite.type;
-                        details.facture.date = dateFormat(ite.created_at);
                     }
                 })
-            })
+            });
+              console.log(details.facture.type)
 
-
-            details.items.map(item => {
-                tableDetails.html(`
+            if (details.items.length===0){
+                tableDetails.append('<tr><td colspan="3"><h5 class="p-3">Aucune operation</h5></td> </tr>')
+                return
+            }
+            details.items.map((item,k) => {
+              //  console.log(details.facture.type)
+                tableDetails.append(`
                    <tr>
-                      <td>${details.facture.type === 1 ? "Entree" : "Sortie"}</td>
+                      <td>${details.facture.type[k] === 1 ? "Entree" : "Sortie"}</td>
                       <td>${item.quantite}</td>
-                      <td>${details.facture.date}</td>
+                      <td>${details.facture.date[k]}</td>
 
                    </tr>
             `)

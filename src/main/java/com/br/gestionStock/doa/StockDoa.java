@@ -67,7 +67,7 @@ public class StockDoa {
     }
 
     public Stock inStock(long article_id){
-        String sql = "select a from Stock a where a.article.id =:id ";
+        String sql = "select s from Stock s where s.article.id =:id order by s.id desc ";
         TypedQuery<Stock> qr = em.createQuery(sql, Stock.class);
         qr.setParameter("id", article_id);
         List<Stock> stocks = qr.getResultList();
@@ -83,7 +83,7 @@ public class StockDoa {
 
     public List<Stock> getAll() {
 
-        String sql = "select e from Stock e join Article a";
+        String sql = "select s from Stock s join Article a order by s.id desc";
 
         TypedQuery<Stock> qr = em.createQuery(sql, Stock.class);
 
@@ -92,7 +92,7 @@ public class StockDoa {
     }
     public List<Stock> getAvailable() {
 
-        String sql = "select s from Stock s join Article where s.quantite >0";
+        String sql = "select s from Stock s join Article where s.quantite >0 order by s.id desc";
 
         TypedQuery<Stock> qr = em.createQuery(sql, Stock.class);
 

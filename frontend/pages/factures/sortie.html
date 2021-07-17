@@ -108,17 +108,17 @@
                         console.log()
                         tableBody.append(`<tr>
                          <td>${item.id}</td>
-                         <td>${item.id}</td>
+                         <td>${item.code}</td>
                          <td><strong>${item.montant} UM</strong></td>
                          <td>${item.type===1?"Entree":"Sortie"}</td>
                          <td>${item.date_exp!==null?moment(item.date).format("YYYY-MM-DD"):''}</td>
                           <td>
-<!--                         <button data-info="${item}" id="showBtn-${item.id}" onclick="alert(88)" class="btn btn-sm btn-primary"> <i class="fa fa-eye"></i></button>-->
                          <button id="deleteBtn-${item.id}" onclick="deleteData(${item.id},'operations')" class="btn btn-sm btn-danger"> <i class="fa fa-trash-alt"></i></button>
-
+                         <button data-id="${item.id}" id="detailsBtn-${item.id}" onclick="details(${item.id},'operations')"
+                         class="btn btn-sm btn-success"> <i class="fa fa-eye"></i>
+                         </button>
                         </td>
                         </tr>`);
-                        // $("#showBtn-"+item.id).data('info',item);
                     });
 
                 });
@@ -128,7 +128,31 @@
 
 
     });
+    function details(id) {
 
+        let tableDetails = $("#detailsTable tbody");
+        tableDetails.html('');
+        $("#detailsModal").modal('show');
+
+        fetchData("operations/" + id, function (data) {
+            $("#code").text(data.code)
+            data.operationItems.map(item => {
+                tableDetails.append(`
+                   <tr>
+                      <td>${item.article.libelle}</td>
+                      <td>${item.quantite}</td>
+                      <td>${item.prix_unitaire}</td>
+                      <td>${item.prix_total}</td>
+                   </tr>
+            `)
+                $("#totalFacture").text(`${data.montant} UM`);
+                $("#printBtn").attr('onclick', `printTable('detailsTable','${data.code}','${dateFormat(data.created_at)}')`)
+                $("#downloadBtn").attr('onclick', `downloadTable('detailsTable','${data.code}','${dateFormat(data.created_at)}')`)
+
+            })
+
+        })
+    }
 </script>
 
 
@@ -148,7 +172,6 @@
         </div>
     </div>
 </div>
-
 <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -166,8 +189,45 @@
         </div>
     </div>
 </div>
-
 <!-- Button trigger modal -->
+<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="exampleModalLgLabel" aria-modal="true"
+     role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detailsModalLabel">Facture #<span id="code"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <table class="table text-center table-borderless" id="detailsTable">
+                    <thead class="border-bottom border-dark">
+                    <tr>
+                        <th>Libelle</th>
+                        <th>Quantite</th>
+                        <th>Prix Unitaire</th>
+                        <th>Prix Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div>
+                    <span class="font-weight-bold h5 ">Total : </span>
+                    <span class="font-weight-bold h4 text-end" id="totalFacture"> 0 UM</span>
+                </div>
+                <br>
+
+                <div class="d-flex justify-content-center">
+                    <button id="printBtn" class="btn btn-primary"><i class="fa fa-file-pdf"></i> Imprimer</button>
+                    <button id="downloadBtn" class="btn btn-success mx-2"><i class="fa fa-download"></i> Télécharger
+                    </button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">

@@ -45,7 +45,7 @@ public class UserDoa {
 
     public List<User> getAll() {
 
-        String sql = "select e from User e ";
+        String sql = "select u from User u order by u.id desc ";
 
         TypedQuery<User> qr = em.createQuery(sql, User.class);
 

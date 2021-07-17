@@ -15,7 +15,7 @@ public class ArticleDoa {
 
 
     public List<Article> getAll() {
-        String sql = "select e from Article e ";
+        String sql = "select a from Article a order by a.id desc ";
         TypedQuery<Article> qr = em.createQuery(sql, Article.class);
         return qr.getResultList();
 
