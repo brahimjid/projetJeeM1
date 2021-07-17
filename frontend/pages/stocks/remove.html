@@ -89,7 +89,18 @@
                 <div class="card shadow-sm mt-5" style="background: white !important;">
                     <div class="card-body">
                         <div id="tb-container">
-
+                       <table class="table table-bordered table-striped" id="articleTable">
+                           <thead>
+                           <tr>
+                               <th class="d-none">Id</th>
+                               <th>libelle</th>
+                               <th>prix</th>
+                               <th>quantite</th>
+                               <th>action</th>
+                           </tr>
+                           </thead>
+                           <tbody id="tsb"></tbody>
+                       </table>
                         </div>
                     </div>
                 </div>
@@ -105,7 +116,7 @@
                     </div>
                     <div class="card-body">
                         <table class="table table-borderless text-center" id="stockSortieTable">
-                            <thead class="">
+                            <thead>
                             <tr>
                                 <th>Libelle</th>
                                 <th>Quantity</th>
@@ -140,6 +151,9 @@
 <script src="../../js/core.js"></script>
 <script src="../../js/sortie.js"></script>
 <script src="../../js/st.js"></script>
+<script src="../../js/jspdf.js"></script>
+<script src="../../js/jspdf.plugin.autotable.js"></script>
+<script src="../../js/moment.js"></script>
 
 
 <script>
@@ -150,17 +164,15 @@
             sidebar.classList.toggle("active")
         });
 
-        createTable('tb-container', null, ['Id', 'libelle','prix','quantite', 'action'], "articleTable",
-            function (tableBody) {
+
                 fetchData("stocks/available", function (data) {
                     data.map(function (item) {
-                        tableBody.append(`
+                        $("#tsb").append(`
                        <tr>
                          <td class="d-none">${item.article.id}</td>
                          <td>${item.article.libelle}</td>
                          <td>${item.article.prix}</td>
                          <td>${item.quantite}</td>
-
                           <td>
                          <button data-info="" id="add-bt-${item.id}" onclick='appendOperation(${JSON.stringify(item)})' class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></button>
                          </td>
@@ -168,13 +180,13 @@
                     });
 
                 });
-            },true);
 
-        jQuery(document).ready(function($) {
-            $('#articleTable').DataTable({
-                "dom": '<"pull-left"f><"pull-right"l>tip'
-            });
-        });
+
+        // jQuery(document).ready(function($) {
+        //     $('#articleTable').DataTable({
+        //         "dom": '<"pull-left"f><"pull-right"l>tip'
+        //     });
+        // });
     });
 
 </script>

@@ -104,11 +104,11 @@
                                            aria-label="full_name">
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" required name="login" class="form-control"
+                                    <input  type="text" required name="login" class="form-control"
                                            placeholder="login" aria-label="login">
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="password" class="form-control" name="password" placeholder="Mot de passe" aria-label="mot de passe">
+                                    <input  type="password" id="password" class="form-control" name="password" placeholder="Mot de passe" aria-label="mot de passe">
                                 </div>
                                 <div class="d-grid col-3 mx-auto">
                                     <button id="editBtn" class="btn btn-primary">
@@ -155,7 +155,7 @@
                          <td>${item.full_name}</td>
                          <td>${item.login}</td>
                           <td>
-                         <button data-info="${item}" id="editBtn-${item.id}" onclick="EditData(this,'#userEditForm')" class="btn btn-sm btn-success"> <i class="fa fa-pen"></i></button>
+                         <button data-info="${item}" id="editBtn-${item.id}" onclick="onEdit(this,'#userEditForm')" class="btn btn-sm btn-success"> <i class="fa fa-pen"></i></button>
                          <button id="deleteBtn-${item.id}" onclick="deleteData(${item.id},'users')" class="btn btn-sm btn-danger"> <i class="fa fa-trash-alt"></i></button>
                         </td>
                         </tr>`);
@@ -169,6 +169,10 @@
                 addData("#userForm",onAdd)
             }) ;
             $("#editBtn").on('click',function (){
+                  if ($("#userEditForm #password").val()===''){
+                      alert("Saisir votr password pour continue")
+                      return
+                  }
                 submitData('#userEditForm',onUpdate)
             })
             function onAdd(data){
@@ -179,7 +183,7 @@
                          <td>${data.full_name}</td>
                          <td>${data.login}</td>
                          <td>
-                         <button data-info="${data}" id="editBtn-${data.id}" onclick="EditData(this,'#userEditForm')"
+                         <button data-info="${data}" id="editBtn-${data.id}" onclick="onEdit(this,'#userEditForm')"
                             class="btn btn-sm btn-success"> <i class="fa fa-pen"></i>
                             </button>
                          <button id="delete-User" onclick="EditData('#userEditForm')" class="btn btn-sm btn-danger"> <i class="fa fa-trash-alt"></i></button>
@@ -199,7 +203,7 @@
                          <td>${data.login}</td>
 
                          <td>
-                         <button data-info="${data}" id="editBtn-${data.id}" onclick="EditData(this,'#userEditForm')"
+                         <button data-info="${data}" id="editBtn-${data.id}" onclick="this,onEdit('#userEditForm')"
                             class="btn btn-sm btn-success"> <i class="fa fa-pen"></i>
                             </button>
                          <button id="delete-user" onclick="EditData('#userEditForm')" class="btn btn-sm btn-danger"> <i class="fa fa-trash-alt"></i></button>
@@ -210,7 +214,24 @@
             }
 
         });
+      function onEdit(button,formId){
+          $(formId).prev('form').hide();
+          $(formId).removeClass('d-none');
+          let info = $(button).data('info');
+          $.each($(formId+' input'), function (k, item) {
+              let input = $(item);
+              if (input.attr('type')==='date'){
+                  const date = moment(info.date_exp).format('YYYY-MM-DD')
+                  input.val(date)
+              }
+              if (input.attr('type')==='password'){
 
+                  input.val('')
+              }
+              else
+                  input.val(info[input.attr('name')]);
+          });
+      }
     </script>
 
 

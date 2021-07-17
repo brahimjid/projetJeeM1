@@ -186,7 +186,8 @@
                          <td>${data.ref}</td>
                          <td>${data.libelle}</td>
                          <td>${data.prix}</td>
-                         <td>${dateFormat(data.date_exp)}</td>
+
+                         <td>${data.date_exp!==null?dateFormat(data.date_exp):''}</td>
                          <td>
                          <button data-info="${data}" id="editBtn-${data.id}" onclick="EditData(this,'#articleEditForm')"
                             class="btn btn-sm btn-success"> <i class="fa fa-pen"></i>
@@ -207,7 +208,7 @@
                          <td>${data.ref}</td>
                          <td>${data.libelle}</td>
                          <td>${data.prix}</td>
-                         <td>${dateFormat(data.date_exp)}</td>
+                         <td>${data.date_exp!==null?dateFormat(data.date_exp):''}</td>
                          <td>
                          <button data-info="${data}" id="editBtn-${data.id}" onclick="EditData(this,'#articleEditForm')"
                             class="btn btn-sm btn-success"> <i class="fa fa-pen"></i>

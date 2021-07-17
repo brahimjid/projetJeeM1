@@ -273,6 +273,7 @@ const fetchData =(url,success=null)=>{
     function storeUser(user) {
         localStorage.setItem('user', JSON.stringify(user));
     }
+
     function getUser() {
 
         return JSON.parse(localStorage.getItem('user'));

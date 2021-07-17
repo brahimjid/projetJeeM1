@@ -78,6 +78,13 @@ function  appendOperation(data){
               dataType: 'json',
               success:function (data){
                   showModal("successModal");
+                  table.find('td input').each(function (item,key) {
+                     $(this).replaceWith($(this).val());
+                  });
+                  let date = moment().format("YYYY-MM-DD HH:mm");
+                  console.log(date)
+                  console.log(data)
+                   printTable("stockSortieTable",data.code,date)
                   cleanup();
 
               },
