@@ -132,6 +132,7 @@
         tableDetails.html('');
         $("#detailsModal").modal('show');
         fetchData("operations/article/" + id, function (data) {
+
                //   console.log(data)
             let details = {'facture': {'type': [], 'date': []}, "items": []};
             data.map(ite => {

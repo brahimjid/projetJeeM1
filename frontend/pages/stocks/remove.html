@@ -179,6 +179,19 @@
                       </tr>`);
                     });
 
+                    $("#articleTable").dataTable({
+                        "autoWidth": false,
+                        language: {
+                            url: "../../fr.json"
+                        },
+                        ordering:false,
+                        select:false,
+                        bInfo:false,
+                        bLengthChange:false,
+                        "pageLength": 5,
+                        "dom": '<"pull-left"f><"pull-right"l>tip'
+                    });
+
                 });
 
 

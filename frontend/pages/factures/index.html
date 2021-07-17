@@ -108,13 +108,14 @@
             function (tableBody) {
                 fetchData("operations", function (data) {
                     data.map(function (item) {
+
                         console.log()
                         tableBody.append(`<tr>
 
                          <td>${item.code}</td>
                          <td><strong>${item.montant} UM</strong></td>
                          <td>${item.type === 1 ? "Entree" : "Sortie"}</td>
-                         <td>${item.date_exp !== null ? dateFormat(item.date, true) : ''}</td>
+                         <td>${item.date_exp !== null ? dateFormat(item.created_at, true) : ''}</td>
                           <td>
                          <button id="deleteBtn-${item.id}" onclick="deleteData(${item.id},'operations')" class="btn btn-sm btn-danger"> <i class="fa fa-trash-alt"></i></button>
 

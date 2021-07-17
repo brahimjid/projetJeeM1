@@ -30,7 +30,7 @@ const showModal= (modalId)=> {
 
   function dateFormat(date,time=false){
 
-    return time?moment().format('YYYY-MM-DD HH:mm'):moment(date).format('YYYY-MM-DD')
+    return time?moment(new Date(date)).format('YYYY-MM-DD HH:mm'):moment(date).format('YYYY-MM-DD')
   }
 
 const fetchData =(url,success=null)=>{
@@ -232,7 +232,7 @@ const fetchData =(url,success=null)=>{
       $(document).ready(function() {
           setTimeout(function (){
               $('#'+idTable).DataTable();
-          },1500)
+          },1000)
 
       } );
    }
