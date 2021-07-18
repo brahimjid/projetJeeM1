@@ -15,7 +15,7 @@ let opData ={
 function  appendOperation(data){
 
     if ($.inArray(data.id,ids)>=0){
-        alert(" in ");
+        alert(" l'article existe deja ");
         return;
     }
     else{
@@ -32,11 +32,9 @@ function  appendOperation(data){
     table.children("tbody").append(` <tr data-id="${articles_ids.length}">
                                 <td style="width: 30%">${data.libelle}</td>
                                 <td style="width: 20%">
-
-                                        <input type="number" id="qte_input" value="1" class="text-center form-control mx-1">
-
+                               <input type="number" id="qte_input" value="1" class="text-center form-control mx-1">
                                 </td>
-                                <td><input name="prix_unitaire[]" readonly="readonly" class="form-control" type="number" id="prix_unitaire_input" value="${data.prix}"></td>
+                                <td><input name="prix_unitaire[]" class="form-control" type="number" id="prix_unitaire_input" value="${data.prix}"></td>
                                 <td >
                                    <div class="d-flex">
                                    <input readonly="readonly" class="form-control" type="number" id="prix_total_input"
@@ -88,18 +86,7 @@ table.find('td input').each(function (item,key) {
               },
               success:function (data){
                   showModal("successModal");
-                  // table.find('td input').each(function (item,key) {
-                  //    $(this).replaceWith($(this).val());
-                  // });
-                  // window.jsPDF = window.jspdf.jsPDF
-                  // let doc = new jsPDF();
-                  // doc.autoTable({html:"#stockEntreeTable"});
-                  // doc.autoPrint();
-                  // doc.output('dataurlnewwindow');
-
                  cleanup();
-
-
               },
               error:function (err){
                   console.log(err)
@@ -115,17 +102,21 @@ table.find('td input').each(function (item,key) {
 
 
 function onchange(){
-    table.on('keyup','#qte_input',function(){
+    table.delegate('#qte_input , #prix_unitaire_input','keyup',function(){
         let id = ($(this).closest('tr').data("id")),
             prix_input =$(this).closest('tr').find('#prix_unitaire_input').val(),
             qte_input = $(this).closest('tr').find('#qte_input').val(),
             prix_total = prix_input * qte_input;
         $(this).closest('tr').find('#prix_total_input').val(prix_total);
         total();
+
         opData.operationItems[id-1].prix_total = prix_total;
         opData.operationItems[id-1].quantite = qte_input;
+        opData.operationItems[id-1].prix_unitaire = parseInt(prix_input);
         articles_pt[id-1] =prix_total;
+        articles_pu[id-1] =prix_input;
         articles_qt[id-1] =qte_input;
+        console.log(opData);
         // console.log(articles_pt[id-1] =prix_total);
     });
 }

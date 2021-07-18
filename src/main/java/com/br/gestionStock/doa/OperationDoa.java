@@ -44,12 +44,24 @@ public class OperationDoa {
              em.persist(op);
              em.getTransaction().commit();
 
+              // find articles
+                Article newPrixArticle = em.find(Article.class,item.getArticle().getId());
+                      // compare article price
+                  if (newPrixArticle.getPrix() != item.getPrix_unitaire()){
+                      newPrixArticle.setPrix(item.getPrix_unitaire());
+                      em.getTransaction().begin();
+                      em.persist(newPrixArticle);
+                      em.getTransaction().commit();
+                  }
+                 // end
+
              if (op.getOperation().getType()==1){
                  Stock stock = new Stock();
                  stock.setQuantite(op.getQuantite());
                  stock.setArticle(op.getArticle());
                  stockDoa.add(stock);
              }
+
              else {
                  Stock stock = stockDoa.inStock(op.getArticle().getId());
                  stockDoa.removeQuantite(stock.getId(),op.getQuantite());

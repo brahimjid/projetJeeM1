@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../fontawesome-free-5.15.3-web/css/all.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/auth.css" rel="stylesheet">
+</head>
+<body>
+<div class="text-center" id="loadingContent">
+    <div class="spinner-border text-primary" id="loader" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header border-bottom">
+            <h5>Gestion stocks</h5>
+        </div>
+
+        <ul class="list-unstyled components">
+            <li class="active">
+                <a href="dashboard.html"><i class="fas fa-home px-2"></i>Dashboard</a>
+            </li>
+            <li >
+                <a href="stocks/index.html"><i class="fas fa-warehouse px-2"></i>Stocks</a>
+            </li>
+            <li>
+                <a href="articles/index.html"><i class="fas fa-cart-plus px-2"></i>Articles</a>
+            </li>
+            <li>
+                <a href="factures/index.html"><i class="fas fa-file-invoice-dollar px-2"></i>Factures</a>
+            </li>
+            <li>
+                <a href="users/index.html"><i class="fas fa-users px-2"></i>Users</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content  -->
+    <div class="container-fluid" id="content">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+            <div class="container-fluid">
+
+                <button type="button" id="sidebarCollapse" class="btn btn-white">
+                    <i class="fas fa-align-left"></i>
+                </button>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item ">
+                            <a id="logoutBtn" class="nav-link btn" href="#">Déconnexion</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+           <div class="row mt-5 ">
+               <div class="col">
+                       <div class="card  shadow h-100 py-2">
+                           <div class="card-body">
+                               <div class="row no-gutters align-items-center">
+                                   <div class="col mr-2">
+                                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Articles</div>
+                                       <div class="h5 mb-0 font-weight-bold text-gray-800" id="countArticles"></div>
+                                   </div>
+                                   <div class="col-auto">
+                                       <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+
+               </div>
+
+               <div class="col">
+                       <div class="card mt-md-3 mt-lg-0 border-left-primary shadow h-100 py-2">
+                           <div class="card-body">
+                               <div class="row no-gutters align-items-center">
+                                   <div class="col mr-2">
+                                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Utilisateurs</div>
+                                       <div class="h5 mb-0 font-weight-bold text-gray-800" id="countUsers"></div>
+                                   </div>
+                                   <div class="col-auto">
+                                       <i class="fas fa-users fa-2x text-gray-300"></i>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+               </div>
+
+               <div class="col mt-lg-0">
+                       <div class="card  border-left-primary shadow h-100 py-2">
+                           <div class="card-body">
+                               <div class="row no-gutters align-items-center">
+                                   <div class="col mr-2">
+                                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Montant des Factures</div>
+                                       <div class="h5 mb-0 font-weight-bold text-gray-800" id="sumFacture"></div>
+                                   </div>
+                                   <div class="col-auto">
+                                       <i class="fas fa-file-invoice-dollar fa-2x text-gray-300"></i>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+               </div>
+           </div>
+    </div>
+</div>
+<script src="../js/jquery.js"></script>
+<script src="../js/moment.js"></script>
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="../js/core.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function (event) {
+        let toggleBtn = document.querySelector("#sidebarCollapse"),
+            sidebar = document.querySelector("#sidebar");
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle("active")
+        });
+
+         fetchData("operations",function (data){
+             let sumFacture =data.map(item => item.montant).reduce((prev, next) => prev + next);
+             $("#sumFacture").text(sumFacture +" UM")
+         });
+
+         fetchData('articles',function (data){
+             $("#countArticles").text(data.length);
+         });
+
+        fetchData('users',function (data){
+             $("#countUsers").text(data.length);
+         })
+    });
+</script>
+</body>
+</html>

@@ -15,7 +15,7 @@ let opData ={
 function  appendOperation(data){
 
     if ($.inArray(data.id,ids)>=0){
-        alert(" in ");
+        alert(" l'article existe deja ");
         return;
     }
     else{
@@ -100,7 +100,7 @@ function onchange(){
             qte_input = $(this).closest('tr').find('#qte_input').val();
         // console.log(qte_real);
           if (qte_input>qte_real){
-              alert(" max ");
+              alert("Quantite insuffisante !  ");
               return
           }
           let   prix_total = prix_input * qte_input;
